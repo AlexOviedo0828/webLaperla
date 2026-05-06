@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fábrica de Empanadas La Perla</title>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+
+  <!-- AOS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+  />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-pro" data-aos="fade-down">
+    <div class="container-fluid site-container py-2 d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+        <span class="brand-logo-text logo-pro">Fábrica de Empanadas La Perla</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <div class="menu-tabs">
+          <button class="filter-btn active" data-category="all" type="button">Todo</button>
+          <button class="filter-btn" data-category="horneadas" type="button">Empanadas Horneadas</button>
+          <button class="filter-btn" data-category="fritas" type="button">Empanadas Fritas</button>
+          <button class="filter-btn" data-category="mayor" type="button">Empanadas por mayor</button>
+          <button class="filter-btn" data-category="bebidas" type="button">Bebidas</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section py-5">
+    <div class="container-fluid site-container">
+      <div class="row align-items-center g-5">
+
+        <!-- TEXTO HERO -->
+        <div class="col-lg-5" data-aos="fade-right">
+          <div class="hero-content">
+            <span class="hero-kicker">Siempre frescas</span>
+
+            <h1 class="hero-title">Nuestro secreto está en la masa</h1>
+
+            <p class="hero-text">
+              En La Perla te esperamos con empanadas siempre frescas, mucho relleno y el sabor
+              que hace volver a nuestros clientes una y otra vez. Ven a visitarnos en Antofagasta
+              y disfruta de una experiencia hecha con calidad, tradición y el auténtico gusto de
+              unas buenas empanadas.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <button
+                class="btn btn-warning btn-lg px-4"
+                type="button"
+                onclick="document.querySelector('#menu')?.scrollIntoView({behavior:'smooth'})"
+              >
+                <i class="bi bi-grid"></i> Ver menú
+              </button>
+            </div>
+
+            <div class="hero-meta mt-4">
+              <div><i class="bi bi-geo-alt"></i> 14 de Febrero 2532, Antofagasta</div>
+              <div><i class="bi bi-clock"></i> Lunes a Domingo · 07:00 am – 08:00 pm</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARRUSEL HERO -->
+        <div class="col-lg-7" data-aos="fade-left">
+          <section class="carousel-section hero-carousel-wrap">
+            <div
+              id="heroCarousel"
+              class="carousel slide carousel-fade pro-carousel"
+              data-bs-ride="carousel"
+              data-bs-touch="true"
+              data-bs-pause="false"
+            >
+              <div class="carousel-inner">
+
+                <div class="carousel-item active" data-bs-interval="4000">
+                  <img
+                    src="assets/img/A QUE NO PUEDES COMER SOLO UNA.png"
+                    class="d-block w-100 h-100 carousel-img"
+                    alt="Promo La Perla 1"
+                  />
+                </div>
+
+                <div class="carousel-item" data-bs-interval="8000">
+                  <video class="d-block w-100 h-100 carousel-img" autoplay muted loop playsinline>
+                    <source
+                      src="assets/img/Black and Yellow Delicious Burger Food Banner.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                </div>
+
+                <div class="carousel-item" data-bs-interval="8000">
+                  <video class="d-block w-100 h-100 carousel-img" autoplay muted loop playsinline>
+                    <source src="assets/img/intro.mp4" type="video/mp4" />
+                  </video>
+                </div>
+
+                <div class="carousel-item" data-bs-interval="8000">
+                  <video class="d-block w-100 h-100 carousel-img" autoplay muted loop playsinline>
+                    <source src="assets/img/burger (1).mp4" type="video/mp4" />
+                  </video>
+                </div>
+
+              </div>
+
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+              </button>
+
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+              </button>
+
+              <div class="carousel-indicators">
+                <button
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to="0"
+                  class="active"
+                  aria-current="true"
+                  aria-label="Slide 1"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to="1"
+                  aria-label="Slide 2"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to="2"
+                  aria-label="Slide 3"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to="3"
+                  aria-label="Slide 4"
+                ></button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS / EXPERIENCIA -->
+  <section class="video-section py-5" data-aos="fade-up">
+    <div class="container">
+      <div class="video-heading text-center mb-4">
+        <span class="video-kicker">Testimonios</span>
+        <h2 class="video-title">La experiencia en La Perla</h2>
+        <p class="video-subtitle">
+          Clientes que vuelven por el sabor, la calidad y el relleno.
+        </p>
+      </div>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <video autoplay muted loop playsinline preload="metadata">
+            <source src="assets/img/download.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="video-card">
+          <video autoplay muted loop playsinline preload="metadata">
+            <source src="assets/img/¡Abierto Ahora!.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="video-card">
+          <img
+            src="assets/img/comentario.png"
+            class="testimonial-img"
+            alt="Testimonio cliente La Perla"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENÚ -->
+  <section class="page-wrap py-4">
+    <div class="container-fluid site-container">
+      <div class="row g-4 align-items-start">
+        <div class="col-12" data-aos="fade-right">
+          <main id="menu" class="mt-2">
+            <div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-3">
+              <div>
+                <h2 class="fw-bold mb-1">Menú</h2>
+                <p class="text-muted mb-0" id="menuSubtitle"></p>
+              </div>
+            </div>
+
+            <div id="menuGrid" class="menu-grid"></div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="py-5 info-section" data-aos="fade-up">
+    <div class="container">
+      <div class="row g-4">
+
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="0">
+          <div class="info-card">
+            <div class="info-icon"><i class="bi bi-clock"></i></div>
+            <h5>Horarios</h5>
+            <p>Lunes a Viernes • 08:00 – 20:00</p>
+            <p>Sabado y Domingo • 08:00 – 16:00</p>
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="info-card">
+            <div class="info-icon"><i class="bi bi-geo-alt"></i></div>
+            <h5>Ubicación</h5>
+            <p>Antofagasta • 14 de Febrero 2532 • </p>
+          </div>
+        </div>
+
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="info-card">
+            <div class="info-icon"><i class="bi bi-telephone"></i></div>
+            <h5>Contacto</h5>
+            <p>
+              <i class="bi bi-whatsapp"></i> +56 9 6158 9674<br />
+              <i class="bi bi-instagram"></i> @laperla.empanadas
+            </p>
+          </div>
+        </div>
+
+        <div class="col-12" data-aos="fade-up" data-aos-delay="150">
+          <div class="map-card">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <h5 class="mb-0">Encuéntranos</h5>
+              <span class="badge rounded-pill map-badge">
+                <i class="bi bi-geo-alt"></i> Antofagasta
+              </span>
+            </div>
+
+            <div class="map-embed">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.675402782651!2d-70.39728102383656!3d-23.65179297873781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96afd51a1a9d3d4d%3A0x33233a77ac1c19f9!2s14%20de%20Febrero%202532%2C%201240000%20Antofagasta!5e0!3m2!1ses-419!2scl!4v1770682968519!5m2!1ses-419!2scl"
+                width="100%"
+                height="320"
+                style="border:0;"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Mapa La Perla"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer-pro" data-aos="fade-up">
+    <div class="container text-center">
+      <p class="mb-1">© 2026 La Perla</p>
+      <small>Hecho con ❤️ en Antofagasta</small>
+    </div>
+  </footer>
+
+  <!-- MODAL IMAGEN -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-sm-down">
+      <div class="modal-content bg-dark border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title text-light" id="imageModalTitle"></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="imageModalImg" src="" class="img-fluid rounded-4 bg-white p-3" alt="Producto" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFFCANVAS CARRITO -->
+  <div class="offcanvas offcanvas-end offcanvas-cart" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title fw-bold" id="cartOffcanvasLabel">
+        <i class="bi bi-cart3"></i> Tu pedido
+      </h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+
+    <div class="offcanvas-body">
+      <div class="cart-wrap cart-wrap-offcanvas">
+        <div class="card cart-card shadow-sm">
+          <div class="card-body cart-body">
+            <ul class="list-group cart-list mb-2" id="cartList"></ul>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-muted">Subtotal:</span>
+              <strong id="cartSubtotal">$0</strong>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-muted">Despacho:</span>
+              <strong id="deliveryFee">$0</strong>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-muted">Total:</span>
+              <strong id="cartTotal">$0</strong>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button id="btnSendOrder" class="btn btn-success btn-sm">
+                <i class="bi bi-whatsapp"></i> Enviar Pedido
+              </button>
+
+              <button id="btnClearCart" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-trash"></i> Vaciar Carrito
+              </button>
+            </div>
+
+            <p class="text-muted small mt-2 mb-0">
+              *El pago y confirmación se coordinan por WhatsApp.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTONES FLOTANTES -->
+  <div class="floating-actions">
+    <button
+      id="floatingCartBtn"
+      class="floating-cart-btn"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#cartOffcanvas"
+      aria-controls="cartOffcanvas"
+      aria-label="Abrir carrito"
+    >
+      <i class="bi bi-cart3"></i>
+      <span id="floatingCartBadge" class="floating-cart-badge">0</span>
+    </button>
+
+    <a
+      href="https://wa.me/56961589674"
+      target="_blank"
+      class="floating-wa-btn"
+      aria-label="WhatsApp"
+    >
+      <i class="bi bi-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AOS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    AOS.init();
+  </script>
+
+  <!-- JS -->
+  <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/menu.js"></script>
+
+</body>
+</html>
