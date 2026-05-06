@@ -700,6 +700,7 @@ body {
   .cart-list .list-group-item {
     padding: 12px;
   }
+<<<<<<< HEAD
 }
 
 /* 🥟 SWEETALERT PREMIUM LA PERLA */
@@ -789,4 +790,6 @@ body {
       font-size: 1rem !important;
       padding: 0.95rem 1.5rem !important;
   }
+=======
+>>>>>>> ef36872c9d2ac341d7a02e326bdfd3d710664ecc
 }

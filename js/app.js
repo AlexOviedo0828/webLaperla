@@ -265,6 +265,7 @@ const PRODUCTS = [
 const $ = (selector) => document.querySelector(selector);
 
 function formatCLP(value) {
+<<<<<<< HEAD
 
     return Number(value || 0).toLocaleString("es-CL", {
 
@@ -492,11 +493,109 @@ function updateCartBadge() {
 
     const floatingBadge = document.getElementById("floatingCartBadge");
 
+=======
+    return Number(value || 0).toLocaleString("es-CL", {
+        style: "currency",
+        currency: "CLP",
+        maximumFractionDigits: 0,
+    });
+}
+
+function getProductById(id) {
+    return PRODUCTS.find((p) => p.id === id);
+}
+
+function safeImage(product) {
+    return product?.img || CONFIG.FALLBACK_IMG;
+}
+
+function cleanPhone(value) {
+    return String(value || "").replace(/[^\d]/g, "");
+}
+
+function escapeHTML(text) {
+    return String(text ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function categoryLabel(category) {
+    const map = {
+        all: "Todo",
+        horneadas: "Empanadas Horneadas",
+        fritas: "Empanadas Fritas",
+        mayor: "Empanadas por mayor",
+        bebidas: "Bebidas",
+    };
+    return map[category] ?? "Todo";
+}
+
+const cart = new Map();
+let currentCategory = "all";
+
+const orderData = {
+    deliveryType: "retiro",
+    name: "",
+    phone: "",
+    address: "",
+    receiver: "",
+    notes: "",
+};
+
+function resetOrderData() {
+    orderData.deliveryType = "retiro";
+    orderData.name = "";
+    orderData.phone = "";
+    orderData.address = "";
+    orderData.receiver = "";
+    orderData.notes = "";
+}
+
+function clearAllAfterSend() {
+    cart.clear();
+    resetOrderData();
+    renderCart();
+}
+
+function cartSubtotal() {
+    let total = 0;
+    for (const item of cart.values()) {
+        const product = getProductById(item.id);
+        if (!product) continue;
+        total += Number(product.price || 0) * Number(item.qty || 0);
+    }
+    return total;
+}
+
+function deliveryCost() {
+    return orderData.deliveryType === "delivery" ? CONFIG.DELIVERY_FEE : 0;
+}
+
+function cartTotal() {
+    return cartSubtotal() + deliveryCost();
+}
+
+function cartCount() {
+    let count = 0;
+    for (const item of cart.values()) {
+        count += Number(item.qty || 0);
+    }
+    return count;
+}
+
+function updateCartBadge() {
+    const topBadge = document.getElementById("cartCountBadge");
+    const floatingBadge = document.getElementById("floatingCartBadge");
+>>>>>>> ef36872c9d2ac341d7a02e326bdfd3d710664ecc
     const floatingBtn = document.getElementById("floatingCartBtn");
 
     const count = cartCount();
 
     if (topBadge) {
+<<<<<<< HEAD
 
         topBadge.textContent = String(count);
 
@@ -896,11 +995,284 @@ function wireButtons() {
 
                 return;
 
+=======
+        topBadge.textContent = String(count);
+        topBadge.style.display = count > 0 ? "grid" : "none";
+    }
+
+    if (floatingBadge) {
+        floatingBadge.textContent = String(count);
+        floatingBadge.style.display = count > 0 ? "grid" : "none";
+    }
+
+    if (floatingBtn) {
+        floatingBtn.classList.toggle("cart-pulse", count > 0);
+    }
+}
+
+function filteredProducts() {
+    if (currentCategory === "all") return PRODUCTS;
+    return PRODUCTS.filter((p) => p.category === currentCategory);
+}
+
+function updateCategoryUI(category) {
+    const subtitle = $("#menuSubtitle");
+    if (subtitle) subtitle.textContent = `Mostrando: ${categoryLabel(category)}`;
+
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.category === category);
+    });
+}
+
+function applyCategory(category, doScroll = false) {
+    currentCategory = category;
+    updateCategoryUI(category);
+    renderMenu();
+
+    if (doScroll) {
+        document.querySelector("#menu")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    }
+}
+
+function getCartOffcanvasEl() {
+    return document.getElementById("cartOffcanvas");
+}
+
+function closeCartOffcanvas() {
+    return new Promise((resolve) => {
+        const el = getCartOffcanvasEl();
+        if (!el || typeof bootstrap === "undefined") return resolve();
+
+        const instance = bootstrap.Offcanvas.getInstance(el);
+        if (!instance) return resolve();
+
+        const done = () => {
+            el.removeEventListener("hidden.bs.offcanvas", done);
+            resolve();
+        };
+
+        el.addEventListener("hidden.bs.offcanvas", done, {
+            once: true
+        });
+        instance.hide();
+    });
+}
+
+function buildOrderFormHTML() {
+    return `
+      <div class="text-start">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Tipo de entrega</label>
+          <div class="d-flex flex-column gap-2">
+            <label class="form-check">
+              <input class="form-check-input" type="radio" name="deliveryType" value="retiro" ${
+                orderData.deliveryType === "retiro" ? "checked" : ""
+              }>
+              <span class="form-check-label">Retiro en la Fabrica</span>
+            </label>
+            <label class="form-check">
+              <input class="form-check-input" type="radio" name="deliveryType" value="delivery" ${
+                orderData.deliveryType === "delivery" ? "checked" : ""
+              }>
+              <span class="form-check-label">Delivery a domicilio (+ ${formatCLP(CONFIG.DELIVERY_FEE)})</span>
+            </label>
+          </div>
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Datos del cliente</label>
+          <input id="od_name" class="form-control mb-2" placeholder="Tu nombre" value="${escapeHTML(orderData.name)}">
+          <input id="od_phone" class="form-control" placeholder="Teléfono de contacto" value="${escapeHTML(orderData.phone)}">
+        </div>
+  
+        <div id="deliveryFields" class="mb-3" style="${orderData.deliveryType === "delivery" ? "" : "display:none;"}">
+          <label class="form-label fw-semibold">Datos delivery</label>
+          <input id="od_receiver" class="form-control mb-2" placeholder="Nombre de quien recibe" value="${escapeHTML(orderData.receiver)}">
+          <input id="od_address" class="form-control" placeholder="Dirección de entrega" value="${escapeHTML(orderData.address)}">
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Notas (opcional)</label>
+          <textarea id="od_notes" class="form-control" rows="3" placeholder="Ej: Calientes o frias ">${escapeHTML(orderData.notes)}</textarea>
+        </div>
+  
+        <div class="p-3 rounded-3 bg-light border">
+          <div class="d-flex justify-content-between">
+            <span class="text-muted">Subtotal:</span>
+            <strong id="od_subtotal">${formatCLP(cartSubtotal())}</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="text-muted">Despacho:</span>
+            <strong id="od_fee">${formatCLP(deliveryCost())}</strong>
+          </div>
+          <div class="d-flex justify-content-between mt-1">
+            <span class="fw-semibold">Total:</span>
+            <strong id="od_total">${formatCLP(cartTotal())}</strong>
+          </div>
+        </div>
+      </div>
+    `;
+}
+
+function updateOrderModalTotals() {
+    const sub = document.getElementById("od_subtotal");
+    const fee = document.getElementById("od_fee");
+    const total = document.getElementById("od_total");
+
+    if (sub) sub.textContent = formatCLP(cartSubtotal());
+    if (fee) fee.textContent = formatCLP(deliveryCost());
+    if (total) total.textContent = formatCLP(cartTotal());
+}
+
+async function openOrderForm() {
+    const result = await Swal.fire({
+        title: "Datos del pedido",
+        html: buildOrderFormHTML(),
+        showCancelButton: true,
+        confirmButtonText: "Enviar por WhatsApp",
+        cancelButtonText: "Cancelar",
+        focusConfirm: false,
+        didOpen: () => {
+            document.querySelectorAll('input[name="deliveryType"]').forEach((radio) => {
+                radio.addEventListener("change", () => {
+                    const value = document.querySelector('input[name="deliveryType"]:checked')?.value || "retiro";
+                    orderData.deliveryType = value === "delivery" ? "delivery" : "retiro";
+
+                    const deliveryFields = document.getElementById("deliveryFields");
+                    if (deliveryFields) {
+                        deliveryFields.style.display = orderData.deliveryType === "delivery" ? "" : "none";
+                    }
+
+                    updateOrderModalTotals();
+                    renderCart();
+                });
+            });
+        },
+        preConfirm: () => {
+            orderData.name = document.getElementById("od_name")?.value?.trim() || "";
+            orderData.phone = document.getElementById("od_phone")?.value?.trim() || "";
+            orderData.receiver = document.getElementById("od_receiver")?.value?.trim() || "";
+            orderData.address = document.getElementById("od_address")?.value?.trim() || "";
+            orderData.notes = document.getElementById("od_notes")?.value?.trim() || "";
+
+            if (!orderData.name) {
+                Swal.showValidationMessage("Escribe tu nombre.");
+                return false;
+            }
+
+            if (!orderData.phone) {
+                Swal.showValidationMessage("Escribe tu teléfono.");
+                return false;
+            }
+
+            if (orderData.deliveryType === "delivery") {
+                if (!orderData.receiver) {
+                    Swal.showValidationMessage("Escribe el nombre de quien recibe.");
+                    return false;
+                }
+                if (!orderData.address) {
+                    Swal.showValidationMessage("Escribe la dirección de entrega.");
+                    return false;
+                }
+            }
+
+            return true;
+        },
+    });
+
+    if (!result.isConfirmed) return;
+
+    openWhatsApp(true);
+    clearAllAfterSend();
+
+    setTimeout(() => {
+        Swal.fire({
+            icon: "success",
+            title: "¡Gracias por tu compra! 🥟",
+            text: "Tu pedido fue preparado para enviarse por WhatsApp.",
+            confirmButtonText: "Listo",
+        });
+    }, 250);
+}
+
+function buildWhatsAppMessage() {
+    const lines = [];
+    lines.push(`Hola, quiero pedir en ${CONFIG.BUSINESS_NAME}`);
+    lines.push(`Ciudad: ${CONFIG.CITY}`);
+    lines.push("");
+    lines.push(`Entrega: ${orderData.deliveryType === "delivery" ? "Delivery a domicilio" : "Retiro en tienda"}`);
+    lines.push(`Nombre: ${orderData.name}`);
+    lines.push(`Contacto: ${orderData.phone}`);
+
+    if (orderData.deliveryType === "delivery") {
+        lines.push(`Recibe: ${orderData.receiver}`);
+        lines.push(`Dirección: ${orderData.address}`);
+    }
+
+    if (orderData.notes) {
+        lines.push(`Notas: ${orderData.notes}`);
+    }
+
+    lines.push("");
+    lines.push("Pedido:");
+
+    for (const item of cart.values()) {
+        const product = getProductById(item.id);
+        if (!product) continue;
+        lines.push(`- ${item.qty} x ${product.title} (${formatCLP(product.price)} c/u)`);
+    }
+
+    lines.push("");
+    lines.push(`Subtotal: ${formatCLP(cartSubtotal())}`);
+    if (deliveryCost() > 0) lines.push(`Despacho: ${formatCLP(deliveryCost())}`);
+    lines.push(`Total aprox: ${formatCLP(cartTotal())}`);
+
+    return encodeURIComponent(lines.join("\n"));
+}
+
+function openWhatsApp(withCart) {
+    const phone = cleanPhone(CONFIG.PHONE_E164);
+
+    if (!phone) {
+        Swal.fire({
+            icon: "warning",
+            title: "Falta el número de WhatsApp",
+            text: "Edita CONFIG.PHONE_E164 en js/app.js",
+        });
+        return;
+    }
+
+    const message =
+        withCart && cart.size > 0 ?
+        buildWhatsAppMessage() :
+        encodeURIComponent(`Hola, quiero pedir en ${CONFIG.BUSINESS_NAME}`);
+
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+}
+
+function wireButtons() {
+    const send = $("#btnSendOrder");
+    const clear = $("#btnClearCart");
+
+    if (send) {
+        send.addEventListener("click", async () => {
+            if (cart.size === 0) {
+                Swal.fire({
+                    icon: "info",
+                    title: "Carrito vacío",
+                    text: "Agrega un producto primero.",
+                });
+                return;
+>>>>>>> ef36872c9d2ac341d7a02e326bdfd3d710664ecc
             }
 
             await closeCartOffcanvas();
 
             setTimeout(async () => {
+<<<<<<< HEAD
 
                 await openOrderForm();
 
@@ -972,11 +1344,50 @@ function wireImageModal() {
 
     const modalEl = document.getElementById("imageModal");
 
+=======
+                await openOrderForm();
+            }, 80);
+        });
+    }
+
+    if (clear) {
+        clear.addEventListener("click", async () => {
+            if (cart.size === 0) return;
+
+            const result = await Swal.fire({
+                icon: "warning",
+                title: "¿Vaciar carrito?",
+                text: "Se eliminarán todos los productos.",
+                showCancelButton: true,
+                confirmButtonText: "Sí, vaciar",
+                cancelButtonText: "Cancelar",
+                confirmButtonColor: "#dc3545",
+            });
+
+            if (result.isConfirmed) {
+                cart.clear();
+                renderCart();
+                Swal.fire({
+                    icon: "success",
+                    title: "Listo",
+                    text: "Carrito vaciado.",
+                    timer: 800,
+                    showConfirmButton: false,
+                });
+            }
+        });
+    }
+}
+
+function wireImageModal() {
+    const modalEl = document.getElementById("imageModal");
+>>>>>>> ef36872c9d2ac341d7a02e326bdfd3d710664ecc
     if (!modalEl || typeof bootstrap === "undefined") return;
 
     const modal = new bootstrap.Modal(modalEl);
 
     document.addEventListener("click", (event) => {
+<<<<<<< HEAD
 
         const img = event.target.closest(".product-img");
 
@@ -1129,3 +1540,61 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCartBadge();
 
 });
+=======
+        const img = event.target.closest(".product-img");
+        if (!img) return;
+
+        const title = img.dataset.title || "";
+        const src = img.dataset.img || "";
+
+        const modalTitle = document.getElementById("imageModalTitle");
+        const modalImg = document.getElementById("imageModalImg");
+
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalImg) modalImg.src = src;
+
+        modal.show();
+    });
+}
+
+function wireCategoryFilters() {
+    document.querySelectorAll(".filter-btn[data-category]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const category = btn.dataset.category || "all";
+            applyCategory(category, true);
+        });
+    });
+
+    updateCategoryUI(currentCategory);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderMenu();
+    renderCart();
+    wireButtons();
+    wireImageModal();
+    wireCategoryFilters();
+    updateCartBadge();
+});
+
+function animateCartButtons() {
+    const topBtn = document.getElementById("btnCartTop");
+    const floatingBtn = document.getElementById("floatingCartBtn");
+    const topBadge = document.getElementById("cartCountBadge");
+    const floatingBadge = document.getElementById("floatingCartBadge");
+
+    [topBtn, floatingBtn].forEach((el) => {
+        if (!el) return;
+        el.classList.remove("cart-bounce");
+        void el.offsetWidth;
+        el.classList.add("cart-bounce");
+    });
+
+    [topBadge, floatingBadge].forEach((el) => {
+        if (!el) return;
+        el.classList.remove("badge-pop");
+        void el.offsetWidth;
+        el.classList.add("badge-pop");
+    });
+}
+>>>>>>> ef36872c9d2ac341d7a02e326bdfd3d710664ecc
