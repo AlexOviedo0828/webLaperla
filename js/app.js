@@ -5,6 +5,7 @@ const CONFIG = {
     FALLBACK_IMG: "assets/img/logo.png",
     DELIVERY_FEE: 2000,
 };
+
 const PRODUCTS = [
     // 🟡 HORNEADAS
     {
@@ -96,6 +97,43 @@ const PRODUCTS = [
         price: 500,
         desc: "Dobladita tradicional sin queso.",
         img: "assets/empanadasHorno/dobladitasinqueso.jpeg",
+    },
+    // 🟡 EMPANADAS EN MASA DE HOJA
+    {
+        id: "hoja-pollo-queso",
+        title: "Pollo Queso en Masa de Hoja",
+        tag: "Horneada",
+        category: "horneadas",
+        price: 2000,
+        desc: "Pollo sazonado con queso mozzarella fundido en una masa de hoja dorada, crujiente y sabrosa.",
+        img: "assets/img/masadehojapollo.png",
+    },
+    {
+        id: "hoja-carne-queso",
+        title: "Carne Queso en Masa de Hoja",
+        tag: "Horneada",
+        category: "horneadas",
+        price: 2900,
+        desc: "Carne sabrosa con queso fundido en una masa de hoja dorada, suave por dentro y crujiente por fuera.",
+        img: "assets/img/carnequesoenhoja.png",
+    },
+    {
+        id: "hoja-todas-las-carnes",
+        title: "Todas las Carnes en Masa de Hoja",
+        tag: "Horneada",
+        category: "horneadas",
+        price: 3000,
+        desc: "Una mezcla abundante de carnes seleccionadas en masa de hoja dorada, ideal para quienes buscan más sabor.",
+        img: "assets/img/todaslascarnesenhoja.png",
+    },
+    {
+        id: "hoja-chaparrita",
+        title: "Chaparrita en Masa de Hoja",
+        tag: "Horneada",
+        category: "horneadas",
+        price: 2700,
+        desc: "Chaparrita horneada en masa de hoja, dorada, suave y con el clásico relleno de salchicha.",
+        img: "assets/img/chaparritaenhoja.png",
     },
 
     // 🔴 FRITAS
@@ -209,6 +247,7 @@ const PRODUCTS = [
         desc: "Bebida energética.",
         img: "assets/bebidas/monster.jpeg",
     },
+
     // 🔵 POR MAYOR
     {
         id: "mayor-pino",
@@ -255,719 +294,523 @@ const PRODUCTS = [
         desc: "Jamón, queso y tomate en versión por mayor, perfecta para eventos o pedidos grandes.",
         img: "assets/empanadasHorno/napolitana.jpeg",
     },
-
 ];
-
-
 
 const $ = (selector) => document.querySelector(selector);
 
 function formatCLP(value) {
-
     return Number(value || 0).toLocaleString("es-CL", {
-
         style: "currency",
-
         currency: "CLP",
-
         maximumFractionDigits: 0,
-
     });
-
 }
 
 function cleanPhone(value) {
-
     return String(value || "").replace(/[^\d]/g, "");
-
 }
 
 function escapeHTML(text) {
-
     return String(text ?? "")
-
         .replaceAll("&", "&amp;")
-
         .replaceAll("<", "&lt;")
-
         .replaceAll(">", "&gt;")
-
         .replaceAll('"', "&quot;")
-
         .replaceAll("'", "&#039;");
-
 }
 
 function safeImage(product) {
-
     return product?.img || CONFIG.FALLBACK_IMG;
-
 }
 
-// ================================
-
-// PRODUCTOS
-
-// ================================
-
 function getProductById(id) {
-
     return PRODUCTS.find((p) => p.id === id);
-
 }
 
 function categoryLabel(category) {
-
     const map = {
-
         all: "Todo",
-
         horneadas: "Empanadas Horneadas",
-
         fritas: "Empanadas Fritas",
-
         mayor: "Empanadas por Mayor",
-
         bebidas: "Bebidas",
-
     };
 
     return map[category] ?? "Todo";
-
 }
-
-// ================================
-
-// ESTADO GLOBAL
-
-// ================================
 
 const cart = new Map();
 
 let currentCategory = "all";
 
 const orderData = {
-
     deliveryType: "retiro",
-
     name: "",
-
     phone: "",
-
     address: "",
-
     receiver: "",
-
     notes: "",
-
 };
 
-// ================================
-
-// ORDER DATA
-
-// ================================
-
 function resetOrderData() {
-
     orderData.deliveryType = "retiro";
-
     orderData.name = "";
-
     orderData.phone = "";
-
     orderData.address = "";
-
     orderData.receiver = "";
-
     orderData.notes = "";
-
 }
 
 function clearAllAfterSend() {
-
     cart.clear();
-
     resetOrderData();
-
     renderCart();
-
 }
 
-// ================================
-
-// CART
-
-// ================================
-
 function cartSubtotal() {
-
     let total = 0;
 
     for (const item of cart.values()) {
-
         const product = getProductById(item.id);
 
         if (!product) continue;
 
         total += Number(product.price || 0) * Number(item.qty || 0);
-
     }
 
     return total;
-
 }
 
 function deliveryCost() {
-
-    return orderData.deliveryType === "delivery"
-
-        ?
-        CONFIG.DELIVERY_FEE
-
-        :
-        0;
-
+    return orderData.deliveryType === "delivery" ? CONFIG.DELIVERY_FEE : 0;
 }
 
 function cartTotal() {
-
     return cartSubtotal() + deliveryCost();
-
 }
 
 function cartCount() {
-
     let count = 0;
 
     for (const item of cart.values()) {
-
         count += Number(item.qty || 0);
-
     }
 
     return count;
-
 }
 
-// ================================
-
-// VALIDACIÓN MAYORISTA
-
-// ================================
-
 function validateWholesaleMinimum() {
-
     let wholesaleQty = 0;
 
     for (const item of cart.values()) {
-
         const product = getProductById(item.id);
 
         if (!product) continue;
 
         if (product.category === "mayor") {
-
             wholesaleQty += Number(item.qty || 0);
-
         }
-
     }
 
     return wholesaleQty >= 20 || wholesaleQty === 0;
-
 }
 
-// ================================
-
-// BADGES CARRITO
-
-// ================================
-
 function updateCartBadge() {
-
     const topBadge = document.getElementById("cartCountBadge");
-
     const floatingBadge = document.getElementById("floatingCartBadge");
-
     const floatingBtn = document.getElementById("floatingCartBtn");
 
     const count = cartCount();
 
     if (topBadge) {
-
         topBadge.textContent = String(count);
-
         topBadge.style.display = count > 0 ? "grid" : "none";
-
     }
 
     if (floatingBadge) {
-
         floatingBadge.textContent = String(count);
-
         floatingBadge.style.display = count > 0 ? "grid" : "none";
-
     }
 
     if (floatingBtn) {
-
         floatingBtn.classList.toggle("cart-pulse", count > 0);
-
     }
-
 }
 
-// ================================
-
-// FILTROS
-
-// ================================
-
 function filteredProducts() {
-
     if (currentCategory === "all") return PRODUCTS;
 
     return PRODUCTS.filter((p) => p.category === currentCategory);
-
 }
 
 function updateCategoryUI(category) {
-
     const subtitle = $("#menuSubtitle");
 
     if (subtitle) {
-
         subtitle.textContent = `Mostrando: ${categoryLabel(category)}`;
-
     }
 
     document.querySelectorAll(".filter-btn").forEach((btn) => {
-
-        btn.classList.toggle(
-
-            "active",
-
-            btn.dataset.category === category
-
-        );
-
+        btn.classList.toggle("active", btn.dataset.category === category);
     });
-
 }
 
 function applyCategory(category, doScroll = false) {
-
     currentCategory = category;
-
     updateCategoryUI(category);
-
     renderMenu();
 
     if (doScroll) {
-
         document.querySelector("#menu")?.scrollIntoView({
-
             behavior: "smooth",
-
             block: "start",
-
         });
-
     }
-
 }
 
-// ================================
-
-// OFFCANVAS
-
-// ================================
-
 function getCartOffcanvasEl() {
-
     return document.getElementById("cartOffcanvas");
-
 }
 
 function closeCartOffcanvas() {
-
     return new Promise((resolve) => {
-
         const el = getCartOffcanvasEl();
 
         if (!el || typeof bootstrap === "undefined") {
-
-            return resolve();
-
+            resolve();
+            return;
         }
 
         const instance = bootstrap.Offcanvas.getInstance(el);
 
-        if (!instance) return resolve();
+        if (!instance) {
+            resolve();
+            return;
+        }
 
         const done = () => {
-
             el.removeEventListener("hidden.bs.offcanvas", done);
-
             resolve();
-
         };
 
         el.addEventListener("hidden.bs.offcanvas", done, {
-
             once: true,
-
         });
 
         instance.hide();
+    });
+}
 
+async function openOrderForm() {
+    const result = await Swal.fire({
+        title: "Datos del pedido",
+        html: `
+            <div class="text-start">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Tipo de entrega</label>
+
+                    <div class="form-check">
+                        <input 
+                            class="form-check-input" 
+                            type="radio" 
+                            name="swalDeliveryType" 
+                            id="swalRetiro" 
+                            value="retiro"
+                            ${orderData.deliveryType === "retiro" ? "checked" : ""}
+                        >
+                        <label class="form-check-label" for="swalRetiro">
+                            Retiro en la fábrica
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input 
+                            class="form-check-input" 
+                            type="radio" 
+                            name="swalDeliveryType" 
+                            id="swalDelivery" 
+                            value="delivery"
+                            ${orderData.deliveryType === "delivery" ? "checked" : ""}
+                        >
+                        <label class="form-check-label" for="swalDelivery">
+                            Delivery (+ ${formatCLP(CONFIG.DELIVERY_FEE)})
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Nombre</label>
+                    <input 
+                        id="swalName" 
+                        class="form-control" 
+                        placeholder="Ej: Alexander"
+                        value="${escapeHTML(orderData.name)}"
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Teléfono</label>
+                    <input 
+                        id="swalPhone" 
+                        class="form-control" 
+                        placeholder="Ej: +56 9 6158 9674"
+                        value="${escapeHTML(orderData.phone)}"
+                    >
+                </div>
+
+                <div id="deliveryFields" style="display:none;">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Quién recibe</label>
+                        <input 
+                            id="swalReceiver" 
+                            class="form-control" 
+                            placeholder="Ej: Alexander"
+                            value="${escapeHTML(orderData.receiver)}"
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Dirección</label>
+                        <input 
+                            id="swalAddress" 
+                            class="form-control" 
+                            placeholder="Ej: 14 de Febrero 2532"
+                            value="${escapeHTML(orderData.address)}"
+                        >
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Notas del pedido</label>
+                    <textarea 
+                        id="swalNotes" 
+                        class="form-control" 
+                        rows="3" 
+                        placeholder="Ej: sin cebolla, retirar a las 18:00, etc."
+                    >${escapeHTML(orderData.notes)}</textarea>
+                </div>
+            </div>
+        `,
+        confirmButtonText: "Enviar por WhatsApp",
+        cancelButtonText: "Cancelar",
+        showCancelButton: true,
+        confirmButtonColor: "#22c55e",
+        cancelButtonColor: "#6c757d",
+        width: 650,
+        didOpen: () => {
+            const retiroRadio = document.getElementById("swalRetiro");
+            const deliveryRadio = document.getElementById("swalDelivery");
+            const deliveryFields = document.getElementById("deliveryFields");
+
+            const toggleDeliveryFields = () => {
+                const selected = document.querySelector('input[name="swalDeliveryType"]:checked')?.value;
+                deliveryFields.style.display = selected === "delivery" ? "block" : "none";
+            };
+
+            retiroRadio?.addEventListener("change", toggleDeliveryFields);
+            deliveryRadio?.addEventListener("change", toggleDeliveryFields);
+
+            toggleDeliveryFields();
+        },
+        preConfirm: () => {
+            const deliveryType = document.querySelector('input[name="swalDeliveryType"]:checked')?.value || "retiro";
+            const name = document.getElementById("swalName")?.value.trim() || "";
+            const phone = document.getElementById("swalPhone")?.value.trim() || "";
+            const receiver = document.getElementById("swalReceiver")?.value.trim() || "";
+            const address = document.getElementById("swalAddress")?.value.trim() || "";
+            const notes = document.getElementById("swalNotes")?.value.trim() || "";
+
+            if (!name) {
+                Swal.showValidationMessage("Ingresa tu nombre.");
+                return false;
+            }
+
+            if (!phone) {
+                Swal.showValidationMessage("Ingresa tu teléfono de contacto.");
+                return false;
+            }
+
+            if (deliveryType === "delivery") {
+                if (!receiver) {
+                    Swal.showValidationMessage("Ingresa quién recibe el pedido.");
+                    return false;
+                }
+
+                if (!address) {
+                    Swal.showValidationMessage("Ingresa la dirección para el delivery.");
+                    return false;
+                }
+            }
+
+            return {
+                deliveryType,
+                name,
+                phone,
+                receiver,
+                address,
+                notes,
+            };
+        },
     });
 
+    if (!result.isConfirmed) return;
+
+    orderData.deliveryType = result.value.deliveryType;
+    orderData.name = result.value.name;
+    orderData.phone = result.value.phone;
+    orderData.receiver = result.value.receiver;
+    orderData.address = result.value.address;
+    orderData.notes = result.value.notes;
+
+    renderCart();
+    openWhatsApp(true);
+
+    setTimeout(() => {
+        clearAllAfterSend();
+    }, 800);
 }
-
-// ================================
-
-// FORMULARIO PEDIDO
-
-// ================================
-
-function buildOrderFormHTML() {
-
-    return `
-
-    
-
-    <div class="text-start">
-
-        <div class="mb-3">
-
-            <label class="form-label fw-semibold">
-
-                Tipo de entrega
-
-            </label>
-
-            <div class="d-flex flex-column gap-2">
-
-                <label class="form-check">
-
-                    <input 
-
-                        class="form-check-input" 
-
-                        type="radio" 
-
-                        name="deliveryType" 
-
-                        value="retiro"
-
-                        ${orderData.deliveryType === "retiro" ? "checked" : ""}
-
-                    >
-
-                    <span class="form-check-label">
-
-                        Retiro en la Fábrica
-
-                    </span>
-
-                </label>
-
-                <label class="form-check">
-
-                    <input 
-
-                        class="form-check-input" 
-
-                        type="radio" 
-
-                        name="deliveryType" 
-
-                        value="delivery"
-
-                        ${orderData.deliveryType === "delivery" ? "checked" : ""}
-
-                    >
-
-                    <span class="form-check-label">
-
-                        Delivery (+ ${formatCLP(CONFIG.DELIVERY_FEE)})
-
-                    </span>
-
-                </label>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    `;
-
-}
-
-// ================================
-
-// WHATSAPP
-
-// ================================
 
 function buildWhatsAppMessage() {
-
     const lines = [];
 
     lines.push(`Hola, quiero pedir en ${CONFIG.BUSINESS_NAME}`);
-
     lines.push(`Ciudad: ${CONFIG.CITY}`);
-
     lines.push("");
 
     lines.push(
-
         `Entrega: ${
-
-            orderData.deliveryType === "delivery"
-
-                ? "Delivery"
-
-                : "Retiro"
-
+            orderData.deliveryType === "delivery" ? "Delivery" : "Retiro"
         }`
-
     );
 
     lines.push(`Nombre: ${orderData.name}`);
-
     lines.push(`Contacto: ${orderData.phone}`);
 
     if (orderData.deliveryType === "delivery") {
-
         lines.push(`Recibe: ${orderData.receiver}`);
-
         lines.push(`Dirección: ${orderData.address}`);
-
     }
 
     if (orderData.notes) {
-
         lines.push(`Notas: ${orderData.notes}`);
-
     }
 
     lines.push("");
-
     lines.push("Pedido:");
 
     for (const item of cart.values()) {
-
         const product = getProductById(item.id);
 
         if (!product) continue;
 
-        lines.push(
-
-            `- ${item.qty} x ${product.title} (${formatCLP(product.price)})`
-
-        );
-
+        lines.push(`- ${item.qty} x ${product.title} (${formatCLP(product.price)})`);
     }
 
     lines.push("");
-
     lines.push(`Subtotal: ${formatCLP(cartSubtotal())}`);
 
     if (deliveryCost() > 0) {
-
         lines.push(`Despacho: ${formatCLP(deliveryCost())}`);
-
     }
 
     lines.push(`Total: ${formatCLP(cartTotal())}`);
 
     return encodeURIComponent(lines.join("\n"));
-
 }
 
 function openWhatsApp(withCart) {
-
     const phone = cleanPhone(CONFIG.PHONE_E164);
 
     if (!phone) {
-
         Swal.fire({
-
             icon: "warning",
-
             title: "Número inválido",
-
             text: "Configura correctamente el teléfono.",
-
         });
 
         return;
-
     }
 
     const message =
+        withCart && cart.size > 0 ?
+        buildWhatsAppMessage() :
+        encodeURIComponent(`Hola, quiero pedir en ${CONFIG.BUSINESS_NAME}`);
 
-        withCart && cart.size > 0
-
-        ?
-        buildWhatsAppMessage()
-
-        :
-        encodeURIComponent(
-
-            `Hola, quiero pedir en ${CONFIG.BUSINESS_NAME}`
-
-        );
-
-    window.open(
-
-        `https://wa.me/${phone}?text=${message}`,
-
-        "_blank"
-
-    );
-
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 
-// ================================
-
-// BOTONES
-
-// ================================
-
 function wireButtons() {
-
     const send = $("#btnSendOrder");
-
     const clear = $("#btnClearCart");
 
     if (send) {
-
         send.addEventListener("click", async () => {
-
             if (cart.size === 0) {
-
                 Swal.fire({
-
                     icon: "info",
-
                     title: "Carrito vacío",
-
                     text: "Agrega productos antes de continuar.",
-
                     confirmButtonColor: "#f59e0b",
-
                 });
 
                 return;
-
             }
 
             if (!validateWholesaleMinimum()) {
-
                 Swal.fire({
-
                     icon: "warning",
-
                     title: "Pedido mínimo por mayor 🥟",
-
                     html: `
-
                         <div style="font-size:18px; line-height:1.8;">
-
                             Los pedidos por mayor requieren un mínimo de 
-
                             <strong>20 unidades</strong>.
-
                         </div>
-
                     `,
-
                     confirmButtonColor: "#f59e0b",
-
                 });
 
                 return;
-
             }
 
             await closeCartOffcanvas();
 
-            setTimeout(async () => {
-
-                await openOrderForm();
-
-            }, 80);
-
+            setTimeout(() => {
+                openOrderForm();
+            }, 150);
         });
-
     }
 
     if (clear) {
-
         clear.addEventListener("click", async () => {
-
             if (cart.size === 0) return;
 
             const result = await Swal.fire({
-
                 icon: "warning",
-
                 title: "¿Vaciar carrito?",
-
                 text: "Se eliminarán todos los productos.",
-
                 showCancelButton: true,
-
                 confirmButtonText: "Sí, vaciar",
-
                 cancelButtonText: "Cancelar",
-
                 confirmButtonColor: "#dc3545",
-
             });
 
             if (result.isConfirmed) {
-
                 cart.clear();
-
                 renderCart();
 
                 Swal.fire({
-
                     icon: "success",
-
                     title: "Listo",
-
                     text: "Carrito vaciado.",
-
                     timer: 900,
-
                     showConfirmButton: false,
-
                 });
-
             }
-
         });
-
     }
-
 }
 
-// ================================
-
-// MODAL IMÁGENES
-
-// ================================
-
 function wireImageModal() {
-
     const modalEl = document.getElementById("imageModal");
 
     if (!modalEl || typeof bootstrap === "undefined") return;
@@ -975,155 +818,81 @@ function wireImageModal() {
     const modal = new bootstrap.Modal(modalEl);
 
     document.addEventListener("click", (event) => {
-
         const img = event.target.closest(".product-img");
 
         if (!img) return;
 
         const title = img.dataset.title || "";
-
         const src = img.dataset.img || "";
 
         const modalTitle = document.getElementById("imageModalTitle");
-
         const modalImg = document.getElementById("imageModalImg");
 
         if (modalTitle) modalTitle.textContent = title;
-
         if (modalImg) modalImg.src = src;
 
         modal.show();
-
     });
-
 }
-
-// ================================
-
-// FILTROS BOTONES
-
-// ================================
 
 function wireCategoryFilters() {
-
-    document
-
-        .querySelectorAll(".filter-btn[data-category]")
-
-        .forEach((btn) => {
-
-            btn.addEventListener("click", () => {
-
-                const category =
-
-                    btn.dataset.category || "all";
-
-                applyCategory(category, true);
-
-            });
-
+    document.querySelectorAll(".filter-btn[data-category]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const category = btn.dataset.category || "all";
+            applyCategory(category, true);
         });
+    });
 
     updateCategoryUI(currentCategory);
-
 }
 
-// ================================
-
-// ANIMACIONES
-
-// ================================
-
 function animateCartButtons() {
-
     const topBtn = document.getElementById("btnCartTop");
-
     const floatingBtn = document.getElementById("floatingCartBtn");
-
     const topBadge = document.getElementById("cartCountBadge");
-
     const floatingBadge = document.getElementById("floatingCartBadge");
 
     [topBtn, floatingBtn].forEach((el) => {
-
         if (!el) return;
 
         el.classList.remove("cart-bounce");
-
         void el.offsetWidth;
-
         el.classList.add("cart-bounce");
-
     });
 
     [topBadge, floatingBadge].forEach((el) => {
-
         if (!el) return;
 
         el.classList.remove("badge-pop");
-
         void el.offsetWidth;
-
         el.classList.add("badge-pop");
-
     });
-
 }
 
-// ================================
-
-// INIT APP
-
-// ================================
-
 document.addEventListener("DOMContentLoaded", () => {
-
     Swal.fire({
-
         icon: "info",
-
-        title: "Pedidos por Mayor ",
-
+        title: "Pedidos por Mayor",
         html: `
-
             <div style="font-size:18px; line-height:1.9;">
-
                 Los pedidos por mayor se realizan desde 
-
                 <strong>20 empanadas</strong>.
-
                 <br><br>
-
                 Puedes armarlas <strong>surtidas</strong>.
-
                 <br><br>
-
                 Ideal para almacenes, reuniones y eventos.
-
             </div>
-
         `,
-
         confirmButtonText: "Ver menú",
-
         confirmButtonColor: "#f59e0b",
-
         backdrop: "rgba(0,0,0,0.65)",
-
         background: "#fffdf8",
-
     });
 
     renderMenu();
-
     renderCart();
-
     wireButtons();
-
     wireImageModal();
-
     wireCategoryFilters();
-
     updateCartBadge();
-
-})
+});
