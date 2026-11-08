@@ -1,898 +1,1569 @@
+"use strict";
+
+/* ==========================================================
+   FÁBRICA DE EMPANADAS LA PERLA
+   APP.JS — VERSIÓN 4.0
+
+   Configuración general
+   Catálogo de productos
+   Categorías
+   Buscador
+   Estado del carrito
+   Pedidos por WhatsApp
+
+   COMPATIBLE CON:
+   index.html
+   cart.js
+   menu.js
+   animations.js
+========================================================== */
+
+
+/* ==========================================================
+   01. CONFIGURACIÓN GENERAL
+========================================================== */
+
 const CONFIG = {
+
     BUSINESS_NAME: "Fábrica de Empanadas La Perla",
+
     CITY: "Antofagasta",
+
     PHONE_E164: "+56961589674",
-    FALLBACK_IMG: "assets/img/logo.png",
+
+    ADDRESS: "14 de Febrero 2532, Antofagasta",
+
+    FALLBACK_IMG: "assets/img/E9168D6F-FA48-4831-943C-2D9803BEB269.png",
+
     DELIVERY_FEE: 2000,
+
+    WHOLESALE_MINIMUM: 20,
+
+    CURRENCY: "CLP",
+
+    LOCALE: "es-CL",
+
+    STORAGE_CART: "laperla_cart_v4",
+
+    STORAGE_ORDER: "laperla_order_v4"
+
 };
 
+
+/* ==========================================================
+   02. CATÁLOGO DE PRODUCTOS
+========================================================== */
+
 const PRODUCTS = [
-    // 🟡 HORNEADAS
+
+    /* ======================================================
+       EMPANADAS HORNEADAS
+    ====================================================== */
+
     {
         id: "horneada-pino",
         title: "Empanada de Pino",
-        tag: "Horneada",
+        desc: "Tradicional empanada horneada de pino.",
         category: "horneadas",
-        price: 2000,
-        desc: "Nuestra empanada de pino destaca por su relleno generoso, sabor casero y ese toque tradicional que conquista desde el primer bocado.",
-        img: "assets/empanadasHorno/pino.jpeg",
+        tag: "Horneada",
+        price: 2200,
+        img: "assets/empanadasHorno/pinohorneada.png"
     },
+
     {
         id: "horneada-pollo-queso",
-        title: "Pollo Queso",
-        tag: "Horneada",
+        title: "Empanada de Pollo",
+        desc: "Empanada horneada con relleno de pollo.",
         category: "horneadas",
-        price: 2000,
-        desc: "Pollo sazonado con queso mozzarella fundido en una masa dorada y equilibrada.",
-        img: "assets/empanadasHorno/pollo.jpeg",
-    },
-    {
-        id: "horneada-mechada-queso",
-        title: "Carne Mechada Queso",
         tag: "Horneada",
-        category: "horneadas",
         price: 2200,
-        desc: "Carne mechada cocinada lentamente con queso fundido, suave y llena de sabor.",
-        img: "assets/empanadasHorno/mechada.jpeg",
+        img: "assets/empanadasHorno/pollouesoHorno.png"
     },
-    {
-        id: "horneada-napolitana",
-        title: "Napolitana",
-        tag: "Horneada",
-        category: "horneadas",
-        price: 1800,
-        desc: "Jamón, queso y salsa de tomate en una mezcla suave y aromática.",
-        img: "assets/empanadasHorno/napolitana.jpeg",
-    },
-    {
-        id: "horneada-mixta",
-        title: "Empanada Mixta",
-        tag: "Horneada",
-        category: "horneadas",
-        price: 2500,
-        desc: "Mezcla de pollo y carne en un relleno abundante y sabroso.",
-        img: "assets/empanadasHorno/mixta.jpeg",
-    },
-    {
-        id: "horneada-tocino",
-        title: "Tocino",
-        tag: "Horneada",
-        category: "horneadas",
-        price: 2800,
-        desc: "Tocino dorado con queso fundido, intenso y equilibrado.",
-        img: "assets/empanadasHorno/tocino.jpeg",
-    },
-    {
-        id: "horneada-pastel-choclo",
-        title: "Pastel de Choclo",
-        tag: "Horneada",
-        category: "horneadas",
-        price: 3500,
-        desc: "Versión en empanada del clásico pastel de choclo chileno.",
-        img: "assets/empanadasHorno/pastechoclo.jpeg",
-    },
+
     {
         id: "horneada-chaparrita",
         title: "Chaparrita",
-        tag: "Horneada",
+        desc: "Clásica chaparrita horneada.",
         category: "horneadas",
-        price: 1800,
-        desc: "Masa dorada con relleno clásico de salchicha.",
-        img: "assets/empanadasHorno/chaparrita.jpeg",
+        tag: "Horneada",
+        price: 2000,
+        img: "assets/empanadasHorno/chaparritaHorno.png"
     },
+
+    {
+        id: "horneada-napolitana",
+        title: "Empanada Napolitana",
+        desc: "Empanada horneada estilo napolitano.",
+        category: "horneadas",
+        tag: "Horneada",
+        price: 1800,
+        img: "assets/empanadasHorno/napolitanaHorno.png"
+    },
+
+    {
+        id: "horneada-mechada-queso",
+        title: "Mechada Queso",
+        desc: "Empanada horneada de carne mechada y queso.",
+        category: "horneadas",
+        tag: "Horneada",
+        price: 2500,
+        img: "assets/empanadasHorno/carnemechadaHorno.png"
+    },
+
+    {
+        id: "horneada-mixta",
+        title: "Empanada Mixta",
+        desc: "Empanada horneada con relleno mixto.",
+        category: "horneadas",
+        tag: "Horneada",
+        price: 2700,
+        img: "assets/empanadasHorno/Mixta.png"
+    },
+
+    {
+        id: "horneada-tocino",
+        title: "Empanada de Tocino",
+        desc: "Empanada horneada con tocino.",
+        category: "horneadas",
+        tag: "Horneada",
+        price: 2800,
+        img: "assets/empanadasHorno/tocinoHorno.png"
+    },
+
+    {
+        id: "horneada-pastel-choclo",
+        title: "Pastel de Choclo",
+        desc: "Especialidad de pastel de choclo.",
+        category: "horneadas",
+        tag: "Horneada",
+        price: 3500,
+        img: "assets/empanadasHorno/pasteldechoclo.png"
+    },
+
     {
         id: "horneada-dobladita-queso",
         title: "Dobladita con queso",
-        tag: "Horneada",
+        desc: "Dobladita horneada rellena de queso.",
         category: "horneadas",
+        tag: "Horneada",
         price: 1000,
-        desc: "Dobladita con queso derretido.",
-        img: "assets/empanadasHorno/dobladita.jpeg",
+        img: "assets/empanadasHorno/dobladitoconQueso.png"
     },
+
     {
         id: "horneada-dobladita-sin-queso",
         title: "Dobladita sin queso",
-        tag: "Horneada",
+        desc: "Tradicional dobladita horneada.",
         category: "horneadas",
+        tag: "Horneada",
         price: 500,
-        desc: "Dobladita tradicional sin queso.",
-        img: "assets/empanadasHorno/dobladitasinqueso.jpeg",
-    },
-    // 🟡 EMPANADAS EN MASA DE HOJA
-    {
-        id: "hoja-pollo-queso",
-        title: "Pollo Queso en Masa de Hoja",
-        tag: "Horneada",
-        category: "horneadas",
-        price: 2000,
-        desc: "Pollo sazonado con queso mozzarella fundido en una masa de hoja dorada, crujiente y sabrosa.",
-        img: "assets/img/masadehojapollo.png",
-    },
-    {
-        id: "hoja-carne-queso",
-        title: "Carne Queso en Masa de Hoja",
-        tag: "Horneada",
-        category: "horneadas",
-        price: 2900,
-        desc: "Carne sabrosa con queso fundido en una masa de hoja dorada, suave por dentro y crujiente por fuera.",
-        img: "assets/img/carnequesoenhoja.png",
-    },
-    {
-        id: "hoja-todas-las-carnes",
-        title: "Todas las Carnes en Masa de Hoja",
-        tag: "Horneada",
-        category: "horneadas",
-        price: 3000,
-        desc: "Una mezcla abundante de carnes seleccionadas en masa de hoja dorada, ideal para quienes buscan más sabor.",
-        img: "assets/img/todaslascarnesenhoja.png",
-    },
-    {
-        id: "hoja-chaparrita",
-        title: "Chaparrita en Masa de Hoja",
-        tag: "Horneada",
-        category: "horneadas",
-        price: 2700,
-        desc: "Chaparrita horneada en masa de hoja, dorada, suave y con el clásico relleno de salchicha.",
-        img: "assets/img/chaparritaenhoja.png",
+        img: "assets/empanadasHorno/dobladitoconQueso.png"
     },
 
-    // 🔴 FRITAS
+
+    /* ======================================================
+       EMPANADAS FRITAS
+    ====================================================== */
+
     {
         id: "frita-camaron-queso",
         title: "Camarón Queso",
-        tag: "Frita",
+        desc: "Empanada frita de camarón y queso.",
         category: "fritas",
+        tag: "Frita",
         price: 3200,
-        desc: "Camarones salteados con queso fundido en masa crujiente.",
-        img: "assets/empanadasfritas/fritacamaron.png",
+        img: "assets/empanadasfritas/camaron.png"
     },
+
     {
         id: "frita-queso",
-        title: "Queso",
-        tag: "Frita",
+        title: "Empanada de Queso",
+        desc: "Empanada frita rellena de queso.",
         category: "fritas",
+        tag: "Frita",
         price: 2000,
-        desc: "Queso fundido en una empanada dorada y crujiente.",
-        img: "assets/empanadasfritas/queso-solo-fritas.jpg",
+        img: "assets/empanadasfritas/camaron.png"
     },
+
     {
         id: "frita-jamon-queso",
         title: "Jamón Queso",
-        tag: "Frita",
+        desc: "Empanada frita de jamón y queso.",
         category: "fritas",
+        tag: "Frita",
         price: 2000,
-        desc: "Jamón y queso derretido en una masa crujiente.",
-        img: "assets/empanadasfritas/jamonqueso.jpg",
+        img: "assets/empanadasfritas/camaron.png"
     },
+
     {
         id: "frita-pollo-queso",
         title: "Pollo Queso",
-        tag: "Frita",
+        desc: "Empanada frita de pollo y queso.",
         category: "fritas",
+        tag: "Frita",
         price: 2300,
-        desc: "Pollo sazonado con queso fundido.",
-        img: "assets/empanadasfritas/Receta-empanadas-de-mariscos-chilenos.jpg",
+        img: "assets/empanadasfritas/camaron.png"
     },
+
     {
         id: "frita-carne-queso",
         title: "Carne Queso",
-        tag: "Frita",
+        desc: "Empanada frita de carne y queso.",
         category: "fritas",
+        tag: "Frita",
         price: 2500,
-        desc: "Carne sazonada con queso derretido.",
-        img: "assets/empanadasfritas/Empanadamechadaqueso2_1000x.webp",
+        img: "assets/empanadasfritas/camaron.png"
     },
+
     {
         id: "frita-tocino-queso",
         title: "Tocino Queso",
-        tag: "Frita",
+        desc: "Empanada frita de tocino y queso.",
         category: "fritas",
+        tag: "Frita",
         price: 2500,
-        desc: "Tocino dorado con queso fundido.",
-        img: "assets/empanadasfritas/close-up-of-a-fried-empanada-with-lime-wedges-and-a-small-bowl-of-red-sauce-on-parchment-paper-photo.jpg",
+        img: "assets/empanadasfritas/camaron.png"
     },
+
     {
         id: "frita-choclo-queso",
         title: "Choclo Queso",
-        tag: "Frita",
+        desc: "Empanada frita de choclo y queso.",
         category: "fritas",
+        tag: "Frita",
         price: 2500,
-        desc: "Choclo dulce con queso fundido.",
-        img: "assets/empanadasfritas/bajar-Editadas_Sazon-032_57b45f2a-573e-4139-b10b-d7234248f468.webp",
+        img: "assets/empanadasfritas/camaron.png"
     },
+
     {
         id: "frita-champinon-queso",
         title: "Champiñón Queso",
-        tag: "Frita",
+        desc: "Empanada frita de champiñón y queso.",
         category: "fritas",
+        tag: "Frita",
         price: 2500,
-        desc: "Champiñones salteados con queso fundido.",
-        img: "assets/empanadasfritas/empanadas-fritas-de-pollo-3193-0.jpg",
+        img: "assets/empanadasfritas/camaron.png"
     },
 
-    // 🟢 BEBIDAS
+
+    /* ======================================================
+       EMPANADAS EN MASA DE HOJA
+    ====================================================== */
+
     {
-        id: "bebida-cocacola-light",
-        title: "Coca-Cola Light",
-        tag: "Bebida",
-        category: "bebidas",
-        price: 1300,
-        desc: "Coca-Cola Light en lata.",
-        img: "assets/bebidas/cocacolaligth.jpeg",
-    },
-    {
-        id: "bebida-agua-gas",
-        title: "Agua con Gas",
-        tag: "Bebida",
-        category: "bebidas",
-        price: 1300,
-        desc: "Agua con gas.",
-        img: "assets/bebidas/aguacongas.jpeg",
-    },
-    {
-        id: "bebida-agua-500ml",
-        title: "Agua 500ml",
-        tag: "Bebida",
-        category: "bebidas",
-        price: 1500,
-        desc: "Agua mineral 500ml.",
-        img: "assets/bebidas/agua.jpeg",
-    },
-    {
-        id: "bebida-monster",
-        title: "Monster",
-        tag: "Bebida",
-        category: "bebidas",
-        price: 2500,
-        desc: "Bebida energética.",
-        img: "assets/bebidas/monster.jpeg",
+        id: "hoja-pollo-queso",
+        title: "Pollo Queso en Masa de Hoja",
+        desc: "Empanada de masa de hoja rellena de pollo y queso.",
+        category: "masa-hoja",
+        tag: "Masa de hoja",
+        price: 2000,
+        img: "assets/img/masadehojapollo.png"
     },
 
-    // 🔵 POR MAYOR
+    {
+        id: "hoja-carne-queso",
+        title: "Carne Queso en Masa de Hoja",
+        desc: "Empanada de masa de hoja rellena de carne y queso.",
+        category: "masa-hoja",
+        tag: "Masa de hoja",
+        price: 2900,
+        img: "assets/img/carnequesoenhoja.png"
+    },
+
+    {
+        id: "hoja-todas-las-carnes",
+        title: "Todas las Carnes en Masa de Hoja",
+        desc: "Empanada de masa de hoja con variedad de carnes.",
+        category: "masa-hoja",
+        tag: "Masa de hoja",
+        price: 3000,
+        img: "assets/img/carnequesoenhoja.png"
+    },
+
+    {
+        id: "hoja-chaparrita",
+        title: "Chaparrita en Masa de Hoja",
+        desc: "Chaparrita preparada con masa de hoja.",
+        category: "masa-hoja",
+        tag: "Masa de hoja",
+        price: 2700,
+        img: "assets/empanadasHorno/chaparritaHorno.png"
+    },
+
+
+    /* ======================================================
+       EMPANADAS POR MAYOR
+    ====================================================== */
+
     {
         id: "mayor-pino",
         title: "Empanada de Pino (Mayor)",
-        tag: "Por mayor",
+        desc: "Empanada de pino para pedidos por mayor.",
         category: "mayor",
-        price: 1400,
-        desc: "Empanada de pino en formato por mayor, con relleno abundante y sabor casero ideal para pedidos grandes.",
-        img: "assets/empanadasHorno/pino.jpeg",
+        tag: "Por mayor",
+        price: 1600,
+        img: "assets/empanadasHorno/pinohorneada.png"
     },
+
     {
         id: "mayor-pollo",
         title: "Empanada de Pollo (Mayor)",
-        tag: "Por mayor",
+        desc: "Empanada de pollo para pedidos por mayor.",
         category: "mayor",
-        price: 1400,
-        desc: "Empanada de pollo sazonado con excelente equilibrio de sabor, pensada para pedidos en volumen.",
-        img: "assets/empanadasHorno/pollo.jpeg",
+        tag: "Por mayor",
+        price: 1600,
+        img: "assets/empanadasHorno/pollouesoHorno.png"
     },
+
     {
         id: "mayor-mechada",
         title: "Empanada de Mechada (Mayor)",
-        tag: "Por mayor",
+        desc: "Empanada de mechada para pedidos por mayor.",
         category: "mayor",
-        price: 1700,
-        desc: "Carne mechada cocinada lentamente, ideal para pedidos grandes con sabor intenso y casero.",
-        img: "assets/empanadasHorno/mechada.jpeg",
+        tag: "Por mayor",
+        price: 1800,
+        img: "assets/empanadasHorno/carnemechadaHorno.png"
     },
+
     {
         id: "mayor-chaparrita",
         title: "Empanada de Chaparrita (Mayor)",
-        tag: "Por mayor",
+        desc: "Chaparrita para pedidos por mayor.",
         category: "mayor",
-        price: 1400,
-        desc: "Chaparrita en formato por mayor, práctica y sabrosa para pedidos múltiples.",
-        img: "assets/empanadasHorno/chaparrita.jpeg",
+        tag: "Por mayor",
+        price: 1600,
+        img: "assets/empanadasHorno/chaparritaHorno.png"
     },
+
     {
         id: "mayor-napolitana",
         title: "Empanada Napolitana (Mayor)",
-        tag: "Por mayor",
+        desc: "Empanada napolitana para pedidos por mayor.",
         category: "mayor",
-        price: 1400,
-        desc: "Jamón, queso y tomate en versión por mayor, perfecta para eventos o pedidos grandes.",
-        img: "assets/empanadasHorno/napolitana.jpeg",
+        tag: "Por mayor",
+        price: 1600,
+        img: "assets/empanadasHorno/napolitanaHorno.png"
     },
+
+    {
+        id: "mayor-solo-queso",
+        title: "Empanada Solo Queso (Mayor)",
+        desc: "Empanada de queso para pedidos por mayor.",
+        category: "mayor",
+        tag: "Por mayor",
+        price: 1600,
+        img: "assets/empanadasHorno/pollouesoHorno.png"
+    },
+
+
+    /* ======================================================
+       BEBIDAS
+    ====================================================== */
+
+    {
+        id: "bebida-cocacola-light",
+        title: "Coca-Cola Light",
+        desc: "Bebida Coca-Cola Light.",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 1300,
+        img: "assets/bebidas/coca-zero.png"
+    },
+
+    {
+        id: "bebida-agua-gas",
+        title: "Agua con Gas",
+        desc: "Agua mineral con gas.",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 1300,
+        img: "assets/bebidas/agua-congas.png"
+    },
+
+    {
+        id: "bebida-agua-500ml",
+        title: "Agua 500 ml",
+        desc: "Agua mineral de 500 ml.",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 1500,
+        img: "assets/bebidas/agua_sin_gas.png"
+    },
+
+    {
+        id: "bebida-monster",
+        title: "Monster",
+        desc: "Bebida energética Monster.",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 2500,
+        img: "assets/bebidas/monster.png"
+    },
+    {
+        id: "coca-cola1.5",
+        title: "Monster",
+        desc: "Coca cola 1.5 ml.",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 2500,
+        img: "assets/bebidas/cocola1-5.png"
+    },
+    {
+        id: "redbull",
+        title: "Monster",
+        desc: "Redbull",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 2500,
+        img: "assets/bebidas/redbull.png"
+    },
+    {
+        id: "coca-cola500ml",
+        title: "Monster",
+        desc: "Coca cola 500 ml.",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 2500,
+        img: "assets/bebidas/cocacola-500.png"
+    },
+    {
+        id: "whatts300",
+        title: "Monster",
+        desc: "Whatts de naranja",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 2500,
+        img: "assets/bebidas/watss300.png"
+    },
+    {
+        id: "whatts300",
+        title: "Monster",
+        desc: "Whatts de frutilla",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 2500,
+        img: "assets/bebidas/whattsfrutilla.png"
+    },
+    {
+        id: "coca-cola500ml",
+        title: "Monster",
+        desc: "Coca cola en lata",
+        category: "bebidas",
+        tag: "Bebida",
+        price: 2500,
+        img: "assets/bebidas/cocaenlata.png"
+    },
+
 ];
 
-const $ = (selector) => document.querySelector(selector);
+
+/* ==========================================================
+   03. CATEGORÍAS
+========================================================== */
+
+const CATEGORIES = {
+
+    all: {
+        title: "Nuestros productos",
+        subtitle: "Descubre todos nuestros sabores."
+    },
+
+    horneadas: {
+        title: "Empanadas horneadas",
+        subtitle: "El sabor tradicional de La Perla."
+    },
+
+    fritas: {
+        title: "Empanadas fritas",
+        subtitle: "Crujientes y deliciosas."
+    },
+
+    "masa-hoja": {
+        title: "Empanadas en masa de hoja",
+        subtitle: "Especialidades preparadas con masa de hoja."
+    },
+
+    mayor: {
+        title: "Empanadas por mayor",
+        subtitle: "Pedidos desde 20 unidades surtidas."
+    },
+
+    bebidas: {
+        title: "Bebidas",
+        subtitle: "El acompañamiento perfecto."
+    }
+
+};
+
+
+/* ==========================================================
+   04. FUNCIONES GENERALES
+========================================================== */
+
+function $(selector) {
+    return document.querySelector(selector);
+}
+
+function $$(selector) {
+    return Array.from(document.querySelectorAll(selector));
+}
+
 
 function formatCLP(value) {
-    return Number(value || 0).toLocaleString("es-CL", {
+
+    const amount = Number(value) || 0;
+
+    return new Intl.NumberFormat("es-CL", {
         style: "currency",
         currency: "CLP",
-        maximumFractionDigits: 0,
-    });
+        maximumFractionDigits: 0
+    }).format(amount);
+
 }
 
-function cleanPhone(value) {
-    return String(value || "").replace(/[^\d]/g, "");
+
+function cleanPhone(phone) {
+
+    return String(phone || "")
+        .replace(/\D/g, "");
+
 }
 
-function escapeHTML(text) {
-    return String(text ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
 }
+
 
 function safeImage(product) {
+
     return product?.img || CONFIG.FALLBACK_IMG;
+
 }
 
-function getProductById(id) {
-    return PRODUCTS.find((p) => p.id === id);
+
+function getProductById(productId) {
+
+    return PRODUCTS.find(
+        product => product.id === productId
+    ) || null;
+
 }
+
 
 function categoryLabel(category) {
-    const map = {
-        all: "Todo",
-        horneadas: "Empanadas Horneadas",
-        fritas: "Empanadas Fritas",
-        mayor: "Empanadas por Mayor",
-        bebidas: "Bebidas",
+
+    const labels = {
+
+        all: "Todos",
+
+        horneadas: "Horneadas",
+
+        fritas: "Fritas",
+
+        "masa-hoja": "Masa de hoja",
+
+        mayor: "Por mayor",
+
+        bebidas: "Bebidas"
+
     };
 
-    return map[category] ?? "Todo";
+    return labels[category] || "Productos";
+
 }
+
+
+function normalizeText(text) {
+
+    return String(text || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
+}
+
+
+/* ==========================================================
+   05. ESTADO GENERAL
+========================================================== */
 
 const cart = new Map();
 
 let currentCategory = "all";
 
+let currentSearch = "";
+
+let selectedProduct = null;
+
+let selectedQuantity = 1;
+
+
 const orderData = {
+
     deliveryType: "retiro",
+
     name: "",
+
     phone: "",
+
     address: "",
+
     receiver: "",
-    notes: "",
+
+    notes: ""
+
 };
 
-function resetOrderData() {
-    orderData.deliveryType = "retiro";
-    orderData.name = "";
-    orderData.phone = "";
-    orderData.address = "";
-    orderData.receiver = "";
-    orderData.notes = "";
+
+/* ==========================================================
+   06. GUARDAR DATOS DEL PEDIDO
+========================================================== */
+
+function saveOrderData() {
+
+    try {
+
+        localStorage.setItem(
+            CONFIG.STORAGE_ORDER,
+            JSON.stringify(orderData)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Error guardando datos del pedido:",
+            error
+        );
+
+    }
+
 }
 
-function clearAllAfterSend() {
-    cart.clear();
-    resetOrderData();
-    renderCart();
+
+function loadOrderData() {
+
+    try {
+
+        const saved = localStorage.getItem(
+            CONFIG.STORAGE_ORDER
+        );
+
+        if (!saved) return;
+
+        const data = JSON.parse(saved);
+
+        if (data && typeof data === "object") {
+
+            Object.assign(orderData, data);
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Error recuperando datos del pedido:",
+            error
+        );
+
+    }
+
 }
+
+
+/* ==========================================================
+   07. OPERACIONES GENERALES DEL CARRITO
+
+   Las funciones:
+   saveCart()
+   loadCart()
+   addToCart()
+   updateCartQuantity()
+   removeFromCart()
+   refreshCart()
+
+   están definidas en cart.js.
+========================================================== */
+
+
+/* ==========================================================
+   08. CÁLCULOS DEL CARRITO
+========================================================== */
 
 function cartSubtotal() {
-    let total = 0;
+
+    let subtotal = 0;
 
     for (const item of cart.values()) {
+
         const product = getProductById(item.id);
 
         if (!product) continue;
 
-        total += Number(product.price || 0) * Number(item.qty || 0);
+        subtotal += product.price * Number(item.qty);
+
     }
 
-    return total;
+    return subtotal;
+
 }
 
-function deliveryCost() {
-    return orderData.deliveryType === "delivery" ? CONFIG.DELIVERY_FEE : 0;
-}
-
-function cartTotal() {
-    return cartSubtotal() + deliveryCost();
-}
 
 function cartCount() {
+
     let count = 0;
 
     for (const item of cart.values()) {
-        count += Number(item.qty || 0);
+
+        count += Number(item.qty) || 0;
+
     }
 
     return count;
+
 }
 
-function validateWholesaleMinimum() {
-    let wholesaleQty = 0;
+
+function wholesaleQuantity() {
+
+    let count = 0;
 
     for (const item of cart.values()) {
+
         const product = getProductById(item.id);
 
-        if (!product) continue;
+        if (product?.category === "mayor") {
 
-        if (product.category === "mayor") {
-            wholesaleQty += Number(item.qty || 0);
+            count += Number(item.qty) || 0;
+
         }
+
     }
 
-    return wholesaleQty >= 20 || wholesaleQty === 0;
+    return count;
+
 }
 
+
+function deliveryCost() {
+
+    if (cart.size === 0) return 0;
+
+    return orderData.deliveryType === "delivery" ?
+        CONFIG.DELIVERY_FEE :
+        0;
+
+}
+
+
+function cartTotal() {
+
+    return cartSubtotal() + deliveryCost();
+
+}
+
+
+/* ==========================================================
+   09. VALIDACIONES
+========================================================== */
+
+function validateWholesaleMinimum() {
+
+    const hasWholesale = Array.from(
+        cart.values()
+    ).some(item => {
+
+        const product = getProductById(item.id);
+
+        return product?.category === "mayor";
+
+    });
+
+    if (!hasWholesale) return true;
+
+    const quantity = wholesaleQuantity();
+
+    if (quantity < CONFIG.WHOLESALE_MINIMUM) {
+
+        showToast(
+            `El pedido por mayor requiere mínimo ${CONFIG.WHOLESALE_MINIMUM} unidades.`,
+            "warning"
+        );
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+
+function validateCart() {
+
+    if (cart.size === 0) {
+
+        showToast(
+            "Tu carrito está vacío",
+            "warning"
+        );
+
+        return false;
+
+    }
+
+    return validateWholesaleMinimum();
+
+}
+
+
+/* ==========================================================
+   10. ACTUALIZAR CONTADOR DEL CARRITO
+========================================================== */
+
 function updateCartBadge() {
-    const topBadge = document.getElementById("cartCountBadge");
-    const floatingBadge = document.getElementById("floatingCartBadge");
-    const floatingBtn = document.getElementById("floatingCartBtn");
 
     const count = cartCount();
 
-    if (topBadge) {
-        topBadge.textContent = String(count);
-        topBadge.style.display = count > 0 ? "grid" : "none";
-    }
+    const badges = [
 
-    if (floatingBadge) {
-        floatingBadge.textContent = String(count);
-        floatingBadge.style.display = count > 0 ? "grid" : "none";
-    }
+        document.getElementById("cartCountBadge"),
 
-    if (floatingBtn) {
-        floatingBtn.classList.toggle("cart-pulse", count > 0);
-    }
+        document.getElementById("floatingCartBadge")
+
+    ];
+
+    badges.forEach(badge => {
+
+        if (!badge) return;
+
+        badge.textContent = count;
+
+        badge.hidden = count === 0;
+
+    });
+
 }
+
+
+/* ==========================================================
+   11. FILTRAR PRODUCTOS
+========================================================== */
 
 function filteredProducts() {
-    if (currentCategory === "all") return PRODUCTS;
 
-    return PRODUCTS.filter((p) => p.category === currentCategory);
+    return PRODUCTS.filter(product => {
+
+        const matchesCategory =
+            currentCategory === "all" ||
+            product.category === currentCategory;
+
+        const search = normalizeText(currentSearch);
+
+        const searchableText = normalizeText(
+            `${product.title} ${product.desc} ${product.category}`
+        );
+
+        const matchesSearch = !search || searchableText.includes(search);
+
+        return matchesCategory && matchesSearch;
+
+    });
+
 }
 
-function updateCategoryUI(category) {
-    const subtitle = $("#menuSubtitle");
 
-    if (subtitle) {
-        subtitle.textContent = `Mostrando: ${categoryLabel(category)}`;
+/* ==========================================================
+   12. APLICAR CATEGORÍA
+========================================================== */
+
+function applyCategory(category) {
+
+    if (!CATEGORIES[category]) {
+        category = "all";
     }
 
-    document.querySelectorAll(".filter-btn").forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.category === category);
-    });
-}
-
-function applyCategory(category, doScroll = false) {
     currentCategory = category;
-    updateCategoryUI(category);
-    renderMenu();
 
-    if (doScroll) {
-        document.querySelector("#menu")?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
+    updateCategoryUI();
+
+    if (typeof renderMenu === "function") {
+        renderMenu();
     }
+
 }
 
-function getCartOffcanvasEl() {
-    return document.getElementById("cartOffcanvas");
-}
 
-function closeCartOffcanvas() {
-    return new Promise((resolve) => {
-        const el = getCartOffcanvasEl();
+function updateCategoryUI() {
 
-        if (!el || typeof bootstrap === "undefined") {
-            resolve();
-            return;
-        }
+    document.querySelectorAll(
+        ".filter-btn[data-category]"
+    ).forEach(button => {
 
-        const instance = bootstrap.Offcanvas.getInstance(el);
+        const isActive =
+            button.dataset.category === currentCategory;
 
-        if (!instance) {
-            resolve();
-            return;
-        }
+        button.classList.toggle(
+            "active",
+            isActive
+        );
 
-        const done = () => {
-            el.removeEventListener("hidden.bs.offcanvas", done);
-            resolve();
-        };
+        button.setAttribute(
+            "aria-pressed",
+            String(isActive)
+        );
 
-        el.addEventListener("hidden.bs.offcanvas", done, {
-            once: true,
-        });
-
-        instance.hide();
-    });
-}
-
-async function openOrderForm() {
-    const result = await Swal.fire({
-        title: "Datos del pedido",
-        html: `
-            <div class="text-start">
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Tipo de entrega</label>
-
-                    <div class="form-check">
-                        <input 
-                            class="form-check-input" 
-                            type="radio" 
-                            name="swalDeliveryType" 
-                            id="swalRetiro" 
-                            value="retiro"
-                            ${orderData.deliveryType === "retiro" ? "checked" : ""}
-                        >
-                        <label class="form-check-label" for="swalRetiro">
-                            Retiro en la fábrica
-                        </label>
-                    </div>
-
-                    <div class="form-check">
-                        <input 
-                            class="form-check-input" 
-                            type="radio" 
-                            name="swalDeliveryType" 
-                            id="swalDelivery" 
-                            value="delivery"
-                            ${orderData.deliveryType === "delivery" ? "checked" : ""}
-                        >
-                        <label class="form-check-label" for="swalDelivery">
-                            Delivery (+ ${formatCLP(CONFIG.DELIVERY_FEE)})
-                        </label>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Nombre</label>
-                    <input 
-                        id="swalName" 
-                        class="form-control" 
-                        placeholder="Ej: Alexander"
-                        value="${escapeHTML(orderData.name)}"
-                    >
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Teléfono</label>
-                    <input 
-                        id="swalPhone" 
-                        class="form-control" 
-                        placeholder="Ej: +56 9 6158 9674"
-                        value="${escapeHTML(orderData.phone)}"
-                    >
-                </div>
-
-                <div id="deliveryFields" style="display:none;">
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Quién recibe</label>
-                        <input 
-                            id="swalReceiver" 
-                            class="form-control" 
-                            placeholder="Ej: Alexander"
-                            value="${escapeHTML(orderData.receiver)}"
-                        >
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Dirección</label>
-                        <input 
-                            id="swalAddress" 
-                            class="form-control" 
-                            placeholder="Ej: 14 de Febrero 2532"
-                            value="${escapeHTML(orderData.address)}"
-                        >
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Notas del pedido</label>
-                    <textarea 
-                        id="swalNotes" 
-                        class="form-control" 
-                        rows="3" 
-                        placeholder="Ej: sin cebolla, retirar a las 18:00, etc."
-                    >${escapeHTML(orderData.notes)}</textarea>
-                </div>
-            </div>
-        `,
-        confirmButtonText: "Enviar por WhatsApp",
-        cancelButtonText: "Cancelar",
-        showCancelButton: true,
-        confirmButtonColor: "#22c55e",
-        cancelButtonColor: "#6c757d",
-        width: 650,
-        didOpen: () => {
-            const retiroRadio = document.getElementById("swalRetiro");
-            const deliveryRadio = document.getElementById("swalDelivery");
-            const deliveryFields = document.getElementById("deliveryFields");
-
-            const toggleDeliveryFields = () => {
-                const selected = document.querySelector('input[name="swalDeliveryType"]:checked')?.value;
-                deliveryFields.style.display = selected === "delivery" ? "block" : "none";
-            };
-
-            retiroRadio?.addEventListener("change", toggleDeliveryFields);
-            deliveryRadio?.addEventListener("change", toggleDeliveryFields);
-
-            toggleDeliveryFields();
-        },
-        preConfirm: () => {
-            const deliveryType = document.querySelector('input[name="swalDeliveryType"]:checked')?.value || "retiro";
-            const name = document.getElementById("swalName")?.value.trim() || "";
-            const phone = document.getElementById("swalPhone")?.value.trim() || "";
-            const receiver = document.getElementById("swalReceiver")?.value.trim() || "";
-            const address = document.getElementById("swalAddress")?.value.trim() || "";
-            const notes = document.getElementById("swalNotes")?.value.trim() || "";
-
-            if (!name) {
-                Swal.showValidationMessage("Ingresa tu nombre.");
-                return false;
-            }
-
-            if (!phone) {
-                Swal.showValidationMessage("Ingresa tu teléfono de contacto.");
-                return false;
-            }
-
-            if (deliveryType === "delivery") {
-                if (!receiver) {
-                    Swal.showValidationMessage("Ingresa quién recibe el pedido.");
-                    return false;
-                }
-
-                if (!address) {
-                    Swal.showValidationMessage("Ingresa la dirección para el delivery.");
-                    return false;
-                }
-            }
-
-            return {
-                deliveryType,
-                name,
-                phone,
-                receiver,
-                address,
-                notes,
-            };
-        },
     });
 
-    if (!result.isConfirmed) return;
-
-    orderData.deliveryType = result.value.deliveryType;
-    orderData.name = result.value.name;
-    orderData.phone = result.value.phone;
-    orderData.receiver = result.value.receiver;
-    orderData.address = result.value.address;
-    orderData.notes = result.value.notes;
-
-    renderCart();
-    openWhatsApp(true);
-
-    setTimeout(() => {
-        clearAllAfterSend();
-    }, 800);
 }
+
+
+/* ==========================================================
+   13. BUSCADOR
+========================================================== */
+
+function searchProducts(query) {
+
+    currentSearch = String(query || "");
+
+    if (typeof renderMenu === "function") {
+        renderMenu();
+    }
+
+}
+
+
+/* ==========================================================
+   14. GENERAR IDENTIFICADOR DEL PEDIDO
+========================================================== */
+
+function generateOrderId() {
+
+    const date = new Date();
+
+    const year = date.getFullYear();
+
+    const month = String(
+        date.getMonth() + 1
+    ).padStart(2, "0");
+
+    const day = String(
+        date.getDate()
+    ).padStart(2, "0");
+
+    const random = Math.floor(
+        1000 + Math.random() * 9000
+    );
+
+    return `LP-${year}${month}${day}-${random}`;
+
+}
+
+
+/* ==========================================================
+   15. GENERAR MENSAJE DE WHATSAPP
+========================================================== */
 
 function buildWhatsAppMessage() {
+
     const lines = [];
 
-    lines.push(`Hola, quiero pedir en ${CONFIG.BUSINESS_NAME}`);
-    lines.push(`Ciudad: ${CONFIG.CITY}`);
+    const orderId = generateOrderId();
+
+    lines.push(
+        `*${CONFIG.BUSINESS_NAME}*`
+    );
+
     lines.push("");
 
     lines.push(
-        `Entrega: ${
-            orderData.deliveryType === "delivery" ? "Delivery" : "Retiro"
-        }`
+        `*Pedido:* ${orderId}`
     );
 
-    lines.push(`Nombre: ${orderData.name}`);
-    lines.push(`Contacto: ${orderData.phone}`);
+    lines.push("");
 
-    if (orderData.deliveryType === "delivery") {
-        lines.push(`Recibe: ${orderData.receiver}`);
-        lines.push(`Dirección: ${orderData.address}`);
-    }
-
-    if (orderData.notes) {
-        lines.push(`Notas: ${orderData.notes}`);
-    }
+    lines.push(
+        "*PRODUCTOS*"
+    );
 
     lines.push("");
-    lines.push("Pedido:");
+
 
     for (const item of cart.values()) {
+
         const product = getProductById(item.id);
 
         if (!product) continue;
 
-        lines.push(`- ${item.qty} x ${product.title} (${formatCLP(product.price)})`);
+        const quantity = Number(item.qty);
+
+        const subtotal = product.price * quantity;
+
+        lines.push(
+            `• ${quantity} x ${product.title}`
+        );
+
+        lines.push(
+            `  ${formatCLP(subtotal)}`
+        );
+
     }
+
 
     lines.push("");
-    lines.push(`Subtotal: ${formatCLP(cartSubtotal())}`);
 
-    if (deliveryCost() > 0) {
-        lines.push(`Despacho: ${formatCLP(deliveryCost())}`);
+    lines.push(
+        `*Subtotal:* ${formatCLP(cartSubtotal())}`
+    );
+
+    lines.push(
+        `*Despacho:* ${formatCLP(deliveryCost())}`
+    );
+
+    lines.push(
+        `*TOTAL:* ${formatCLP(cartTotal())}`
+    );
+
+    lines.push("");
+
+    lines.push(
+        "*DATOS DEL CLIENTE*"
+    );
+
+    lines.push(
+        `Nombre: ${orderData.name || "No indicado"}`
+    );
+
+    lines.push(
+        `Teléfono: ${orderData.phone || "No indicado"}`
+    );
+
+    lines.push(
+        `Entrega: ${
+            orderData.deliveryType === "delivery"
+                ? "Delivery"
+                : "Retiro en local"
+        }`
+    );
+
+
+    if (orderData.deliveryType === "delivery") {
+
+        lines.push(
+            `Dirección: ${orderData.address || "No indicada"}`
+        );
+
+        if (orderData.receiver) {
+
+            lines.push(
+                `Recibe: ${orderData.receiver}`
+            );
+
+        }
+
     }
 
-    lines.push(`Total: ${formatCLP(cartTotal())}`);
 
-    return encodeURIComponent(lines.join("\n"));
+    const notesInput = document.getElementById(
+        "orderNotes"
+    );
+
+    const notes = notesInput?.value.trim() ||
+        orderData.notes;
+
+
+    if (notes) {
+
+        lines.push("");
+
+        lines.push(
+            `*Indicaciones:* ${notes}`
+        );
+
+    }
+
+
+    lines.push("");
+
+    lines.push(
+        "Pedido sujeto a confirmación."
+    );
+
+    return lines.join("\n");
+
 }
 
-function openWhatsApp(withCart) {
-    const phone = cleanPhone(CONFIG.PHONE_E164);
 
-    if (!phone) {
+/* ==========================================================
+   16. ABRIR WHATSAPP
+========================================================== */
+
+function openWhatsApp(validate = true) {
+
+    if (validate && !validateCart()) {
+        return false;
+    }
+
+    const message = buildWhatsAppMessage();
+
+    const phone = cleanPhone(
+        CONFIG.PHONE_E164
+    );
+
+    const url =
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    const opened = window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+    return Boolean(opened);
+
+}
+
+
+/* ==========================================================
+   17. NOTIFICACIONES
+========================================================== */
+
+function showToast(message, icon = "success") {
+
+    if (typeof Swal !== "undefined") {
+
         Swal.fire({
-            icon: "warning",
-            title: "Número inválido",
-            text: "Configura correctamente el teléfono.",
+
+            toast: true,
+
+            position: "top-end",
+
+            icon,
+
+            title: message,
+
+            showConfirmButton: false,
+
+            timer: 2200,
+
+            timerProgressBar: true
+
         });
 
-        return;
+    } else {
+
+        console.log(message);
+
     }
 
-    const message =
-        withCart && cart.size > 0 ?
-        buildWhatsAppMessage() :
-        encodeURIComponent(`Hola, quiero pedir en ${CONFIG.BUSINESS_NAME}`);
-
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
 
-function wireButtons() {
-    const send = $("#btnSendOrder");
-    const clear = $("#btnClearCart");
 
-    if (send) {
-        send.addEventListener("click", async () => {
-            if (cart.size === 0) {
-                Swal.fire({
-                    icon: "info",
-                    title: "Carrito vacío",
-                    text: "Agrega productos antes de continuar.",
-                    confirmButtonColor: "#f59e0b",
-                });
-
-                return;
-            }
-
-            if (!validateWholesaleMinimum()) {
-                Swal.fire({
-                    icon: "warning",
-                    title: "Pedido mínimo por mayor 🥟",
-                    html: `
-                        <div style="font-size:18px; line-height:1.8;">
-                            Los pedidos por mayor requieren un mínimo de 
-                            <strong>20 unidades</strong>.
-                        </div>
-                    `,
-                    confirmButtonColor: "#f59e0b",
-                });
-
-                return;
-            }
-
-            await closeCartOffcanvas();
-
-            setTimeout(() => {
-                openOrderForm();
-            }, 150);
-        });
-    }
-
-    if (clear) {
-        clear.addEventListener("click", async () => {
-            if (cart.size === 0) return;
-
-            const result = await Swal.fire({
-                icon: "warning",
-                title: "¿Vaciar carrito?",
-                text: "Se eliminarán todos los productos.",
-                showCancelButton: true,
-                confirmButtonText: "Sí, vaciar",
-                cancelButtonText: "Cancelar",
-                confirmButtonColor: "#dc3545",
-            });
-
-            if (result.isConfirmed) {
-                cart.clear();
-                renderCart();
-
-                Swal.fire({
-                    icon: "success",
-                    title: "Listo",
-                    text: "Carrito vaciado.",
-                    timer: 900,
-                    showConfirmButton: false,
-                });
-            }
-        });
-    }
-}
-
-function wireImageModal() {
-    const modalEl = document.getElementById("imageModal");
-
-    if (!modalEl || typeof bootstrap === "undefined") return;
-
-    const modal = new bootstrap.Modal(modalEl);
-
-    document.addEventListener("click", (event) => {
-        const img = event.target.closest(".product-img");
-
-        if (!img) return;
-
-        const title = img.dataset.title || "";
-        const src = img.dataset.img || "";
-
-        const modalTitle = document.getElementById("imageModalTitle");
-        const modalImg = document.getElementById("imageModalImg");
-
-        if (modalTitle) modalTitle.textContent = title;
-        if (modalImg) modalImg.src = src;
-
-        modal.show();
-    });
-}
-
-function wireCategoryFilters() {
-    document.querySelectorAll(".filter-btn[data-category]").forEach((btn) => {
-        btn.addEventListener("click", () => {
-            const category = btn.dataset.category || "all";
-            applyCategory(category, true);
-        });
-    });
-
-    updateCategoryUI(currentCategory);
-}
+/* ==========================================================
+   18. ANIMACIÓN DEL CARRITO
+========================================================== */
 
 function animateCartButtons() {
-    const topBtn = document.getElementById("btnCartTop");
-    const floatingBtn = document.getElementById("floatingCartBtn");
-    const topBadge = document.getElementById("cartCountBadge");
-    const floatingBadge = document.getElementById("floatingCartBadge");
 
-    [topBtn, floatingBtn].forEach((el) => {
-        if (!el) return;
+    const buttons = [
 
-        el.classList.remove("cart-bounce");
-        void el.offsetWidth;
-        el.classList.add("cart-bounce");
+        document.getElementById("btnCartTop"),
+
+        document.getElementById("floatingCartBtn")
+
+    ];
+
+    buttons.forEach(button => {
+
+        if (!button) return;
+
+        button.classList.remove(
+            "cart-bounce"
+        );
+
+        void button.offsetWidth;
+
+        button.classList.add(
+            "cart-bounce"
+        );
+
+        setTimeout(() => {
+
+            button.classList.remove(
+                "cart-bounce"
+            );
+
+        }, 500);
+
     });
 
-    [topBadge, floatingBadge].forEach((el) => {
-        if (!el) return;
-
-        el.classList.remove("badge-pop");
-        void el.offsetWidth;
-        el.classList.add("badge-pop");
-    });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    Swal.fire({
-        icon: "info",
-        title: "Pedidos por Mayor",
-        html: `
-            <div style="font-size:18px; line-height:1.9;">
-                Los pedidos por mayor se realizan desde 
-                <strong>20 empanadas</strong>.
-                <br><br>
-                Puedes armarlas <strong>surtidas</strong>.
-                <br><br>
-                Ideal para almacenes, reuniones y eventos.
-            </div>
-        `,
-        confirmButtonText: "Ver menú",
-        confirmButtonColor: "#f59e0b",
-        backdrop: "rgba(0,0,0,0.65)",
-        background: "#fffdf8",
+
+/* ==========================================================
+   19. EVENTOS DE CATEGORÍAS
+========================================================== */
+
+function wireCategoryFilters() {
+
+    document.querySelectorAll(
+        ".filter-btn[data-category]"
+    ).forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                applyCategory(
+                    button.dataset.category
+                );
+
+            }
+        );
+
     });
 
-    renderMenu();
-    renderCart();
-    wireButtons();
-    wireImageModal();
-    wireCategoryFilters();
-    updateCartBadge();
-});
+}
+
+
+/* ==========================================================
+   20. EVENTOS DEL BUSCADOR
+========================================================== */
+
+function wireSearch() {
+
+    const input = document.getElementById(
+        "productSearch"
+    );
+
+    const clearButton = document.getElementById(
+        "clearSearch"
+    );
+
+    if (input) {
+
+        input.addEventListener(
+            "input",
+            event => {
+
+                searchProducts(
+                    event.target.value
+                );
+
+            }
+        );
+
+    }
+
+
+    if (clearButton) {
+
+        clearButton.addEventListener(
+            "click",
+            () => {
+
+                if (input) {
+                    input.value = "";
+                }
+
+                searchProducts("");
+
+                input?.focus();
+
+            }
+        );
+
+    }
+
+}
+
+
+/* ==========================================================
+   21. ABRIR CHECKOUT
+========================================================== */
+
+function openCheckout() {
+
+    if (!validateCart()) return;
+
+    const cartElement = document.getElementById(
+        "cartOffcanvas"
+    );
+
+    const checkoutElement = document.getElementById(
+        "checkoutOffcanvas"
+    );
+
+    if (!checkoutElement) return;
+
+    const cartInstance =
+        bootstrap.Offcanvas.getInstance(
+            cartElement
+        );
+
+    cartInstance?.hide();
+
+
+    const nameInput = document.getElementById(
+        "customerName"
+    );
+
+    const phoneInput = document.getElementById(
+        "customerPhone"
+    );
+
+    if (nameInput) {
+        nameInput.value = orderData.name;
+    }
+
+    if (phoneInput) {
+        phoneInput.value = orderData.phone;
+    }
+
+
+    updateCheckoutDeliveryFields();
+
+    updateCheckoutTotal();
+
+
+    const checkoutInstance =
+        bootstrap.Offcanvas.getOrCreateInstance(
+            checkoutElement
+        );
+
+    checkoutInstance.show();
+
+}
+
+
+/* ==========================================================
+   22. ACTUALIZAR CAMPOS DELIVERY
+========================================================== */
+
+function updateCheckoutDeliveryFields() {
+
+    const selected = document.querySelector(
+        'input[name="deliveryType"]:checked'
+    );
+
+    const deliveryType =
+        selected?.value || "retiro";
+
+    orderData.deliveryType = deliveryType;
+
+    const container = document.getElementById(
+        "deliveryAddressContainer"
+    );
+
+    if (container) {
+
+        container.hidden =
+            deliveryType !== "delivery";
+
+    }
+
+    saveOrderData();
+
+    updateCheckoutTotal();
+
+    if (typeof renderCart === "function") {
+        renderCart();
+    }
+
+}
+
+
+/* ==========================================================
+   23. ACTUALIZAR TOTAL DEL CHECKOUT
+========================================================== */
+
+function updateCheckoutTotal() {
+
+    const totalElement = document.getElementById(
+        "checkoutTotal"
+    );
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            formatCLP(cartTotal());
+
+    }
+
+}
+
+
+/* ==========================================================
+   24. FINALIZAR PEDIDO
+========================================================== */
+
+function submitCheckout(event) {
+
+    event?.preventDefault();
+
+    if (!validateCart()) return;
+
+
+    const name = document.getElementById(
+        "customerName"
+    )?.value.trim() || "";
+
+
+    const phone = document.getElementById(
+        "customerPhone"
+    )?.value.trim() || "";
+
+
+    const address = document.getElementById(
+        "deliveryAddress"
+    )?.value.trim() || "";
+
+
+    if (name.length < 2) {
+
+        showToast(
+            "Ingresa tu nombre",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    if (cleanPhone(phone).length < 8) {
+
+        showToast(
+            "Ingresa un teléfono válido",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        orderData.deliveryType === "delivery" &&
+        address.length < 5
+    ) {
+
+        showToast(
+            "Ingresa una dirección válida",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    Object.assign(orderData, {
+
+        name,
+
+        phone,
+
+        address
+
+    });
+
+    saveOrderData();
+
+    openWhatsApp(false);
+
+}
+
+
+/* ==========================================================
+   25. EVENTOS GENERALES
+========================================================== */
+
+function wireButtons() {
+
+    document.getElementById(
+        "btnGoCheckout"
+    )?.addEventListener(
+        "click",
+        openCheckout
+    );
+
+
+    document.getElementById(
+        "checkoutForm"
+    )?.addEventListener(
+        "submit",
+        submitCheckout
+    );
+
+
+    document.getElementById(
+        "btnClearCart"
+    )?.addEventListener(
+        "click",
+        () => {
+
+            if (typeof emptyCart === "function") {
+
+                emptyCart();
+
+            }
+
+        }
+    );
+
+
+    document.querySelectorAll(
+        'input[name="deliveryType"]'
+    ).forEach(radio => {
+
+        radio.addEventListener(
+            "change",
+            updateCheckoutDeliveryFields
+        );
+
+    });
+
+}
+
+
+/* ==========================================================
+   26. INICIALIZACIÓN GENERAL
+========================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadOrderData();
+
+        wireCategoryFilters();
+
+        wireSearch();
+
+        wireButtons();
+
+        updateCategoryUI();
+
+        updateCartBadge();
+
+        if (typeof renderMenu === "function") {
+
+            renderMenu();
+
+        }
+
+        console.info(
+            `${CONFIG.BUSINESS_NAME}: ${PRODUCTS.length} productos cargados.`
+        );
+
+    }
+);

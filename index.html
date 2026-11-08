@@ -1,431 +1,1726 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Fábrica de Empanadas La Perla</title>
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#111111"
+    >
+
+    <meta
+        name="description"
+        content="Fábrica de Empanadas La Perla en Antofagasta. Empanadas horneadas, fritas, masa de hoja, ventas por mayor y bebidas."
+    >
+
+    <title>La Perla | Fábrica de Empanadas</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
+    >
 
+    <!-- BOOTSTRAP -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
-    />
+    >
 
+    <!-- BOOTSTRAP ICONS -->
     <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         rel="stylesheet"
-    />
+    >
 
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
-    />
+    <!-- ESTILOS -->
+    <link rel="stylesheet" href="css/styles.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="css/styles.css" />
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-pro" data-aos="fade-down">
-        <div class="container-fluid site-container py-2 d-flex align-items-center justify-content-between">
-            <a class="navbar-brand d-flex align-items-center gap-3" href="#">
-                <span class="brand-logo-text logo-pro">Fábrica de Empanadas La Perla</span>
+
+    <header
+        class="main-header"
+        id="mainHeader"
+    >
+
+        <div class="header-container">
+
+            <!-- MENÚ -->
+
+            <button
+                type="button"
+                class="header-icon"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#mainMenu"
+                aria-controls="mainMenu"
+                aria-label="Abrir menú"
+            >
+                <i class="bi bi-list"></i>
+            </button>
+
+
+            <!-- LOGO -->
+
+            <a
+                href="#inicio"
+                class="brand-logo"
+                aria-label="La Perla, ir al inicio"
+            >
+
+                <span class="brand-icon">
+                    <i class="bi bi-shop"></i>
+                </span>
+
+                <span class="brand-text">
+
+                    <strong>LA PERLA</strong>
+
+            
+
+                </span>
+
             </a>
 
-            <div class="d-flex align-items-center gap-2 flex-wrap">
-                <div class="menu-tabs">
-                    <button class="filter-btn active" data-category="all" type="button">Todo</button>
-                    <button class="filter-btn" data-category="horneadas" type="button">Empanadas Horneadas</button>
-                    <button class="filter-btn" data-category="fritas" type="button">Empanadas Fritas</button>
-                    <button class="filter-btn" data-category="mayor" type="button">Empanadas por mayor</button>
-                    <button class="filter-btn" data-category="bebidas" type="button">Bebidas</button>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <section class="hero-section py-5">
-        <div class="container-fluid site-container">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-5" data-aos="fade-right">
-                    <div class="hero-content">
-                        <span class="hero-kicker">Siempre frescas</span>
+            <!-- ACCIONES -->
 
-                        <h1 class="hero-title">Nuestro secreto está en la masa</h1>
+            <div class="header-actions">
 
-                        <p class="hero-text">
-                            En La Perla te esperamos con empanadas siempre frescas, mucho relleno y el sabor
-                            que hace volver a nuestros clientes una y otra vez. Ven a visitarnos en Antofagasta
-                            y disfruta de una experiencia hecha con calidad, tradición y el auténtico gusto de
-                            unas buenas empanadas.
-                        </p>
+                <a
+                    href="#productos"
+                    class="header-icon"
+                    aria-label="Buscar productos"
+                >
+                    <i class="bi bi-search"></i>
+                </a>
 
-                        <div class="d-flex flex-wrap gap-3 mt-4">
-                            <button
-                                class="btn btn-warning btn-lg px-4"
-                                type="button"
-                                onclick="document.querySelector('#menu')?.scrollIntoView({behavior:'smooth'})"
-                            >
-                                <i class="bi bi-grid"></i> Ver menú
-                            </button>
-                        </div>
+                <button
+                    type="button"
+                    class="header-icon"
+                    id="btnCartTop"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#cartOffcanvas"
+                    aria-controls="cartOffcanvas"
+                    aria-label="Abrir carrito"
+                >
 
-                        <div class="hero-meta mt-4">
-                            <div><i class="bi bi-geo-alt"></i> 14 de Febrero 2532, Antofagasta</div>
-                            <div><i class="bi bi-clock"></i> Lunes a Domingo · 07:00 am – 08:00 pm</div>
-                        </div>
-                    </div>
-                </div>
+                    <i class="bi bi-bag"></i>
 
-                <div class="col-lg-7" data-aos="fade-left">
-                    <section class="carousel-section hero-carousel-wrap">
-                        <div
-                            id="heroCarousel"
-                            class="carousel slide carousel-fade pro-carousel"
-                            data-bs-ride="carousel"
-                            data-bs-touch="true"
-                            data-bs-pause="false"
-                        >
-                            <div class="carousel-inner">
-                                <div class="carousel-item active" data-bs-interval="4000">
-                                    <img
-                                        src="assets/img/A QUE NO PUEDES COMER SOLO UNA.png"
-                                        class="d-block w-100 h-100 carousel-img"
-                                        alt="Promo La Perla 1"
-                                    />
-                                </div>
+                    <span
+                        class="cart-badge"
+                        id="cartCountBadge"
+                        hidden
+                    >
+                        0
+                    </span>
 
-                                <div class="carousel-item" data-bs-interval="8000">
-                                    <video class="d-block w-100 h-100 carousel-img" autoplay muted loop playsinline>
-                                        <source
-                                            src="assets/img/Black and Yellow Delicious Burger Food Banner.mp4"
-                                            type="video/mp4"
-                                        />
-                                    </video>
-                                </div>
+                </button>
 
-                                <div class="carousel-item" data-bs-interval="8000">
-                                    <video class="d-block w-100 h-100 carousel-img" autoplay muted loop playsinline>
-                                        <source src="assets/img/intro.mp4" type="video/mp4" />
-                                    </video>
-                                </div>
-
-                                <div class="carousel-item" data-bs-interval="8000">
-                                    <video class="d-block w-100 h-100 carousel-img" autoplay muted loop playsinline>
-                                        <source src="assets/img/burger (1).mp4" type="video/mp4" />
-                                    </video>
-                                </div>
-                            </div>
-
-                            <button
-                                class="carousel-control-prev"
-                                type="button"
-                                data-bs-target="#heroCarousel"
-                                data-bs-slide="prev"
-                            >
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Anterior</span>
-                            </button>
-
-                            <button
-                                class="carousel-control-next"
-                                type="button"
-                                data-bs-target="#heroCarousel"
-                                data-bs-slide="next"
-                            >
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Siguiente</span>
-                            </button>
-
-                            <div class="carousel-indicators">
-                                <button
-                                    type="button"
-                                    data-bs-target="#heroCarousel"
-                                    data-bs-slide-to="0"
-                                    class="active"
-                                    aria-current="true"
-                                    aria-label="Slide 1"
-                                ></button>
-
-                                <button
-                                    type="button"
-                                    data-bs-target="#heroCarousel"
-                                    data-bs-slide-to="1"
-                                    aria-label="Slide 2"
-                                ></button>
-
-                                <button
-                                    type="button"
-                                    data-bs-target="#heroCarousel"
-                                    data-bs-slide-to="2"
-                                    aria-label="Slide 3"
-                                ></button>
-
-                                <button
-                                    type="button"
-                                    data-bs-target="#heroCarousel"
-                                    data-bs-slide-to="3"
-                                    aria-label="Slide 4"
-                                ></button>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="video-section py-5" data-aos="fade-up">
-        <div class="container">
-            <div class="video-heading text-center mb-4">
-                <span class="video-kicker">Testimonios</span>
-                <h2 class="video-title">La experiencia en La Perla</h2>
-                <p class="video-subtitle">
-                    Clientes que vuelven por el sabor, la calidad y el relleno.
-                </p>
             </div>
 
-            <div class="video-grid">
-                <div class="video-card">
-                    <video autoplay muted loop playsinline preload="metadata">
-                        <source src="assets/img/download.mp4" type="video/mp4" />
-                    </video>
-                </div>
-
-                <div class="video-card">
-                    <video autoplay muted loop playsinline preload="metadata">
-                        <source src="assets/img/¡Abierto Ahora!.mp4" type="video/mp4" />
-                    </video>
-                </div>
-
-                <div class="video-card">
-                    <img
-                        src="assets/img/comentario.png"
-                        class="testimonial-img"
-                        alt="Testimonio cliente La Perla"
-                    />
-                </div>
-            </div>
         </div>
-    </section>
 
-    <section class="page-wrap py-4">
-        <div class="container-fluid site-container">
-            <div class="row g-4 align-items-start">
-                <div class="col-12" data-aos="fade-right">
-                    <main id="menu" class="mt-2">
-                        <div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-3">
-                            <div>
-                                <h2 class="fw-bold mb-1">Menú</h2>
-                                <p class="text-muted mb-0" id="menuSubtitle"></p>
-                            </div>
-                        </div>
+    </header>
 
-                        <div id="menuGrid" class="menu-grid"></div>
-                    </main>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="py-5 info-section" data-aos="fade-up">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="0">
-                    <div class="info-card">
-                        <div class="info-icon"><i class="bi bi-clock"></i></div>
-                        <h5>Horarios</h5>
-                        <p>Lunes a Viernes • 08:00 – 20:00</p>
-                        <p>Sábado y Domingo • 08:00 – 16:00</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="info-card">
-                        <div class="info-icon"><i class="bi bi-geo-alt"></i></div>
-                        <h5>Ubicación</h5>
-                        <p>Antofagasta • 14 de Febrero 2532</p>
-                    </div>
-                </div>
-
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="info-card">
-                        <div class="info-icon"><i class="bi bi-telephone"></i></div>
-                        <h5>Contacto</h5>
-                        <p>
-                            <i class="bi bi-whatsapp"></i> +56 9 6158 9674<br />
-                            <i class="bi bi-instagram"></i> @laperla.empanadas
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-12" data-aos="fade-up" data-aos-delay="150">
-                    <div class="map-card">
-                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
-                            <h5 class="mb-0">Encuéntranos</h5>
-
-                            <span class="badge rounded-pill map-badge">
-                                <i class="bi bi-geo-alt"></i> Antofagasta
-                            </span>
-                        </div>
-
-                        <div class="map-embed">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.675402782651!2d-70.39728102383656!3d-23.65179297873781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x96afd51a1a9d3d4d%3A0x33233a77ac1c19f9!2s14%20de%20Febrero%202532%2C%201240000%20Antofagasta!5e0!3m2!1ses-419!2scl!4v1770682968519!5m2!1ses-419!2scl"
-                                width="100%"
-                                height="320"
-                                style="border:0;"
-                                allowfullscreen
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"
-                                title="Mapa La Perla"
-                            ></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer-pro" data-aos="fade-up">
-        <div class="container text-center">
-            <p class="mb-1">© 2026 La Perla</p>
-            <small>Hecho con ❤️ en Antofagasta</small>
-        </div>
-    </footer>
-
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-sm-down">
-            <div class="modal-content bg-dark border-0">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title text-light" id="imageModalTitle"></h5>
-
-                    <button
-                        type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal"
-                    ></button>
-                </div>
-
-                <div class="modal-body text-center">
-                    <img
-                        id="imageModalImg"
-                        src=""
-                        class="img-fluid rounded-4 bg-white p-3"
-                        alt="Producto"
-                    />
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- =====================================================
+         02. MENÚ LATERAL
+    ====================================================== -->
 
     <div
-        class="offcanvas offcanvas-end offcanvas-cart"
+        class="offcanvas offcanvas-start mobile-menu"
         tabindex="-1"
-        id="cartOffcanvas"
-        aria-labelledby="cartOffcanvasLabel"
+        id="mainMenu"
+        aria-labelledby="mainMenuTitle"
     >
+
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title fw-bold" id="cartOffcanvasLabel">
-                <i class="bi bi-cart3"></i> Tu pedido
+
+            <h5 id="mainMenuTitle">
+                Fabrica De Empanadas La Perla
             </h5>
 
             <button
                 type="button"
-                class="btn-close btn-close-white"
+                class="btn-close"
                 data-bs-dismiss="offcanvas"
                 aria-label="Cerrar"
             ></button>
+
         </div>
+
 
         <div class="offcanvas-body">
-            <div class="cart-wrap cart-wrap-offcanvas">
-                <div class="card cart-card shadow-sm">
-                    <div class="card-body cart-body">
-                        <ul class="list-group cart-list mb-2" id="cartList"></ul>
 
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-muted">Subtotal:</span>
-                            <strong id="cartSubtotal">$0</strong>
-                        </div>
+            <nav class="mobile-nav">
 
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-muted">Despacho:</span>
-                            <strong id="deliveryFee">$0</strong>
-                        </div>
+                <a href="#inicio">
+                    <i class="bi bi-house"></i>
+                    Inicio
+                </a>
 
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-muted">Total:</span>
-                            <strong id="cartTotal">$0</strong>
-                        </div>
+                <a href="#productos">
+                    <i class="bi bi-grid"></i>
+                    Categorías
+                </a>
 
-                        <div class="d-grid gap-2">
-                            <button id="btnSendOrder" class="btn btn-success btn-sm" type="button">
-                                <i class="bi bi-whatsapp"></i> Enviar Pedido
-                            </button>
+                <a href="#menu">
+                    <i class="bi bi-bag-heart"></i>
+                    Nuestros productos
+                </a>
 
-                            <button id="btnClearCart" class="btn btn-outline-danger btn-sm" type="button">
-                                <i class="bi bi-trash"></i> Vaciar Carrito
-                            </button>
-                        </div>
+                <a href="#nosotros">
+                    <i class="bi bi-shop"></i>
+                    Nuestra fábrica
+                </a>
 
-                        <p class="text-muted small mt-2 mb-0">
-                            *El pago y confirmación se coordinan por WhatsApp.
-                        </p>
-                    </div>
-                </div>
+                <a href="#mayor">
+                    <i class="bi bi-box-seam"></i>
+                    Ventas por mayor
+                </a>
+
+                <a href="#contacto">
+                    <i class="bi bi-geo-alt"></i>
+                    Contacto
+                </a>
+
+            </nav>
+
+
+            <div class="menu-contact">
+
+                <p>
+                    ¿Necesitas ayuda con tu pedido?
+                </p>
+
+                <a
+                    href="https://wa.me/56961589674"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-success w-100"
+                >
+
+                    <i class="bi bi-whatsapp"></i>
+
+                    Escríbenos por WhatsApp
+
+                </a>
+
             </div>
+
         </div>
+
     </div>
 
-    <div class="floating-actions">
-        <button
-            id="floatingCartBtn"
-            class="floating-cart-btn"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#cartOffcanvas"
-            aria-controls="cartOffcanvas"
-            aria-label="Abrir carrito"
-        >
-            <i class="bi bi-cart3"></i>
-            <span id="floatingCartBadge" class="floating-cart-badge">0</span>
-        </button>
 
-        <a
-            href="https://wa.me/56961589674"
-            target="_blank"
-            class="floating-wa-btn"
-            aria-label="WhatsApp"
+    <!-- =====================================================
+         03. HERO
+    ====================================================== -->
+
+    <main>
+
+        <section
+            class="hero-section"
+            id="inicio"
         >
-            <i class="bi bi-whatsapp"></i>
-        </a>
+
+            <!-- VIDEO -->
+
+            <video
+                class="hero-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-hidden="true"
+            >
+
+                <source
+                    src="assets/img/antofagasta.mp4"
+                    type="video/mp4"
+                >
+
+            </video>
+
+
+            <!-- CAPA OSCURA -->
+
+            <div class="hero-overlay"></div>
+
+
+            <!-- CONTENIDO -->
+
+            <div class="site-container">
+
+                <div class="hero-content">
+
+                    <span class="hero-location">
+
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                        ANTOFAGASTA, CHILE
+
+                    </span>
+
+
+                    <h1>
+
+                        EL SABOR
+                        <br>
+
+                        TRADICIONAL
+                        <br>
+
+                        <span>DE LA PERLA</span>
+
+                    </h1>
+
+
+                    <p>
+
+                        Empanadas preparadas con dedicación,
+                        sabor y tradición en Antofagasta.
+
+                    </p>
+
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <a
+                            href="#productos"
+                            class="btn-hero"
+                        >
+
+                            Ver catálogo
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+
+                        <a
+                            href="https://wa.me/56961589674"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-outline-light d-inline-flex align-items-center gap-2 px-3"
+                        >
+
+                            <i class="bi bi-whatsapp"></i>
+
+                            WhatsApp
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BENEFICIOS -->
+
+            <div class="hero-benefits">
+
+                <div class="benefit-item">
+
+                    <i class="bi bi-fire"></i>
+
+                    <span>
+                        Recién preparadas
+                    </span>
+
+                </div>
+
+
+                <div class="benefit-item">
+
+                    <i class="bi bi-bag-check"></i>
+
+                    <span>
+                        Retiro en local
+                    </span>
+
+                </div>
+
+
+                <div class="benefit-item">
+
+                    <i class="bi bi-truck"></i>
+
+                    <span>
+                        Delivery
+                    </span>
+
+                </div>
+
+
+                <div class="benefit-item">
+
+                    <i class="bi bi-box-seam"></i>
+
+                    <span>
+                        Ventas por mayor
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             04. CATEGORÍAS
+        ================================================== -->
+
+        <section
+            class="catalog-section"
+            id="productos"
+        >
+
+            <div class="site-container">
+
+                <div class="catalog-heading">
+
+                    <span class="section-kicker">
+                        NUESTRO CATÁLOGO
+                    </span>
+
+                    <h2>
+                        Descubre nuestros sabores
+                    </h2>
+
+                    <p>
+                        Selecciona una categoría y encuentra
+                        tus productos favoritos.
+                    </p>
+
+                </div>
+
+
+                <!-- BUSCADOR -->
+
+                <div class="search-container">
+
+                    <i class="bi bi-search"></i>
+
+                    <input
+                        type="search"
+                        id="productSearch"
+                        placeholder="Buscar empanadas, bebidas..."
+                        autocomplete="off"
+                        aria-label="Buscar productos"
+                    >
+
+                    <button
+                        type="button"
+                        class="clear-search"
+                        id="clearSearch"
+                        aria-label="Limpiar búsqueda"
+                    >
+
+                        <i class="bi bi-x-lg"></i>
+
+                    </button>
+
+                </div>
+
+
+                <!-- FILTROS -->
+
+                <div
+                    class="category-filters"
+                    aria-label="Filtrar productos por categoría"
+                >
+
+                    <button
+                        type="button"
+                        class="filter-btn active"
+                        data-category="all"
+                        aria-pressed="true"
+                    >
+                        Todos
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="filter-btn"
+                        data-category="horneadas"
+                    >
+                        Horneadas
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="filter-btn"
+                        data-category="fritas"
+                    >
+                        Fritas
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="filter-btn"
+                        data-category="masa-hoja"
+                    >
+                        Masa de hoja
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="filter-btn"
+                        data-category="mayor"
+                    >
+                        Por mayor
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="filter-btn"
+                        data-category="bebidas"
+                    >
+                        Bebidas
+                    </button>
+
+                </div>
+
+
+                <!-- TARJETAS DE CATEGORÍAS -->
+
+                <div class="category-grid">
+
+                    <!-- HORNEADAS -->
+
+                    <button
+                        type="button"
+                        class="category-card"
+                        data-category="horneadas"
+                    >
+
+                        <img
+                            src="assets/empanadasHorno/pinohorneada.png"
+                            alt="Empanadas horneadas"
+                            loading="lazy"
+                        >
+
+                        <div class="category-card-content">
+
+                            <h3>Horneadas</h3>
+
+                            <span>
+
+                                Tradicionales
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </span>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- FRITAS -->
+
+                    <button
+                        type="button"
+                        class="category-card"
+                        data-category="fritas"
+                    >
+
+                        <img
+                            src="assets/empanadasfritas/camaron.png"
+                            alt="Empanadas fritas"
+                            loading="lazy"
+                        >
+
+                        <div class="category-card-content">
+
+                            <h3>Fritas</h3>
+
+                            <span>
+
+                                Crujientes
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </span>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- MASA DE HOJA -->
+
+                    <button
+                        type="button"
+                        class="category-card"
+                        data-category="masa-hoja"
+                    >
+
+                        <img
+                            src="assets/img/C6C889A7-565E-4C2A-8094-E2C594B86FA8.png"
+                            alt="Empanadas en masa de hoja"
+                            loading="lazy"
+                        >
+
+                        <div class="category-card-content">
+
+                            <h3>Masa de hoja</h3>
+
+                            <span>
+
+                                Especialidades
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </span>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- POR MAYOR -->
+
+                    <button
+                        type="button"
+                        class="category-card"
+                        data-category="mayor"
+                    >
+
+                        <img
+                            src="assets/empanadasHorno/carnemechadaHorno.png"
+                            alt="Empanadas por mayor"
+                            loading="lazy"
+                        >
+
+                        <div class="category-card-content">
+
+                            <h3>Por mayor</h3>
+
+                            <span>
+
+                                Desde 20 unidades
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </span>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- BEBIDAS -->
+
+                    <button
+                        type="button"
+                        class="category-card"
+                        data-category="bebidas"
+                    >
+
+                        <img
+                            src="assets/bebidas/cocacola-500.png"
+                            alt="Bebidas"
+                            loading="lazy"
+                        >
+
+                        <div class="category-card-content">
+
+                            <h3>Bebidas</h3>
+
+                            <span>
+
+                                Refrescos y energéticas
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             05. PRODUCTOS
+        ================================================== -->
+
+        <section
+            class="products-section"
+            id="menu"
+        >
+
+            <div class="site-container">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-kicker">
+                            NUESTRAS ESPECIALIDADES
+                        </span>
+
+                        <h2 id="menuTitle">
+                            Nuestros productos
+                        </h2>
+
+                        <p id="menuSubtitle">
+                            Descubre todos nuestros sabores.
+                        </p>
+
+                    </div>
+
+
+                    <div class="products-count">
+
+                        <span id="productsCount">
+                            0
+                        </span>
+
+                        productos
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCTOS DINÁMICOS -->
+
+                <div
+                    class="menu-grid"
+                    id="menuGrid"
+                    aria-live="polite"
+                ></div>
+
+
+                <!-- SIN RESULTADOS -->
+
+                <div
+                    class="empty-products d-none"
+                    id="emptyProducts"
+                >
+
+                    <i class="bi bi-search"></i>
+
+                    <h3>
+                        No encontramos productos
+                    </h3>
+
+                    <p>
+                        Prueba otra búsqueda o selecciona
+                        una categoría diferente.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="btn btn-warning"
+                        id="btnResetFilters"
+                    >
+                        Ver todos los productos
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             06. NUESTRA FÁBRICA
+        ================================================== -->
+
+        <section
+            class="factory-section"
+            id="nosotros"
+        >
+
+            <div class="site-container">
+
+                <div class="factory-content">
+
+                    <span class="section-kicker">
+                        SOBRE NOSOTROS
+                    </span>
+
+                    <h2>
+                        Tradición y sabor
+                        en cada empanada
+                    </h2>
+
+                    <p>
+
+                        En Fábrica de Empanadas La Perla
+                        preparamos productos con dedicación,
+                        ofreciendo alternativas para nuestros
+                        clientes, familias y empresas.
+
+                    </p>
+
+
+                    <div class="factory-features">
+
+                        <div>
+
+                            <i class="bi bi-patch-check"></i>
+
+                            <span>
+                                Preparación dedicada
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-shop"></i>
+
+                            <span>
+                                Atención en Antofagasta
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-box-seam"></i>
+
+                            <span>
+                                Pedidos individuales y por mayor
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             07. VENTAS POR MAYOR
+        ================================================== -->
+
+        <section
+            class="wholesale-section"
+            id="mayor"
+        >
+
+            <div class="site-container">
+
+                <div class="wholesale-content">
+
+                    <span class="section-kicker">
+                        PARA EMPRESAS Y EVENTOS
+                    </span>
+
+                    <h2>
+                        Empanadas por mayor
+                    </h2>
+
+                    <p>
+
+                        Realizamos pedidos por mayor desde
+                        20 unidades surtidas, ideales para
+                        empresas, reuniones y eventos.
+
+                    </p>
+
+                    <p>
+                        Consulta disponibilidad y condiciones
+                        directamente con nuestro equipo.
+                    </p>
+
+
+                    <a
+                        href="https://wa.me/56961589674?text=Hola%2C%20quiero%20cotizar%20empanadas%20por%20mayor"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-wholesale"
+                    >
+
+                        <i class="bi bi-whatsapp"></i>
+
+                        Solicitar cotización
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             08. CONTACTO
+        ================================================== -->
+
+        <section
+            class="contact-section"
+            id="contacto"
+        >
+
+            <div class="site-container">
+
+                <span class="section-kicker">
+                    ENCUÉNTRANOS
+                </span>
+
+                <h2>
+                    Visítanos en Antofagasta
+                </h2>
+
+
+                <div class="contact-info">
+
+                    <div>
+
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                        <p>
+
+                            <strong>Dirección</strong>
+                            <br>
+
+                            14 de Febrero 2532
+                            <br>
+
+                            Antofagasta, Chile
+
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="bi bi-whatsapp"></i>
+
+                        <p>
+
+                            <strong>WhatsApp</strong>
+                            <br>
+
+                            +56 9 6158 9674
+
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="bi bi-bag-check"></i>
+
+                        <p>
+
+                            <strong>Modalidades</strong>
+                            <br>
+
+                            Retiro en local y delivery
+                            según cobertura.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="https://www.google.com/maps/search/?api=1&query=14+de+Febrero+2532+Antofagasta"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-location"
+                >
+
+                    <i class="bi bi-geo-alt"></i>
+
+                    Cómo llegar
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         09. FOOTER
+    ====================================================== -->
+
+    <footer class="main-footer">
+
+        <div class="site-container">
+
+            <div class="footer-brand">
+
+                <strong>
+                    LA PERLA
+                </strong>
+
+                <small>
+                    FÁBRICA DE EMPANADAS
+                </small>
+
+            </div>
+
+
+            <p>
+
+                El sabor tradicional de Antofagasta.
+                <br>
+
+                © 2026 Fábrica de Empanadas La Perla.
+
+            </p>
+
+
+            <div class="footer-social">
+
+                <a
+                    href="https://wa.me/56961589674"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="WhatsApp La Perla"
+                >
+
+                    <i class="bi bi-whatsapp"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         10. MODAL DETALLE DEL PRODUCTO
+    ====================================================== -->
+
+    <div
+        class="modal fade product-modal"
+        id="productModal"
+        tabindex="-1"
+        aria-labelledby="productModalTitle"
+        aria-hidden="true"
+    >
+
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-content">
+
+                <div class="product-modal-image">
+
+                    <img
+                        id="productModalImg"
+                        src=""
+                        alt="Imagen del producto"
+                    >
+
+                    <button
+                        type="button"
+                        class="product-modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"
+                    >
+
+                        <i class="bi bi-x-lg"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="product-modal-body">
+
+                    <span
+                        class="product-category-label"
+                        id="productModalCategory"
+                    ></span>
+
+
+                    <h2 id="productModalTitle"></h2>
+
+
+                    <strong
+                        class="product-detail-price"
+                        id="productModalPrice"
+                    ></strong>
+
+
+                    <p
+                        class="product-description"
+                        id="productModalDescription"
+                    ></p>
+
+
+                    <!-- CANTIDAD -->
+
+                    <div class="product-quantity">
+
+                        <span>
+                            Cantidad
+                        </span>
+
+
+                        <div class="quantity-control">
+
+                            <button
+                                type="button"
+                                id="btnDecreaseQuantity"
+                                aria-label="Disminuir cantidad"
+                            >
+                                <i class="bi bi-dash"></i>
+                            </button>
+
+
+                            <span id="productQuantity">
+                                1
+                            </span>
+
+
+                            <button
+                                type="button"
+                                id="btnIncreaseQuantity"
+                                aria-label="Aumentar cantidad"
+                            >
+                                <i class="bi bi-plus"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- AGREGAR -->
+
+                    <button
+                        type="button"
+                        class="btn-add-cart"
+                        id="btnAddProductToCart"
+                    >
+
+                        <i class="bi bi-cart-plus"></i>
+
+                        Agregar al carrito
+
+                    </button>
+
+
+                    <!-- RECOMENDACIONES -->
+
+                    <div
+                        class="product-recommendations"
+                        id="recommendedProducts"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- =====================================================
+         11. CARRITO
+    ====================================================== -->
 
-    <script>
-        AOS.init();
-    </script>
+    <div
+        class="offcanvas offcanvas-end cart-offcanvas"
+        tabindex="-1"
+        id="cartOffcanvas"
+        aria-labelledby="cartOffcanvasTitle"
+    >
+
+        <div class="offcanvas-header">
+
+            <h5
+                class="offcanvas-title"
+                id="cartOffcanvasTitle"
+            >
+
+                <i class="bi bi-bag me-2"></i>
+
+                Mi carrito
+
+            </h5>
+
+
+            <div class="cart-header-actions">
+
+                <button
+                    type="button"
+                    class="cart-clear-btn"
+                    id="btnClearCart"
+                    aria-label="Vaciar carrito"
+                >
+
+                    <i class="bi bi-trash"></i>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Cerrar carrito"
+                ></button>
+
+            </div>
+
+        </div>
+
+
+        <div class="offcanvas-body">
+
+            <!-- LISTA -->
+
+            <div class="cart-products">
+
+                <div
+                    class="cart-list"
+                    id="cartList"
+                ></div>
+
+            </div>
+
+
+            <!-- OBSERVACIONES -->
+
+            <div class="cart-observations">
+
+                <label for="orderNotes">
+
+                    <i class="bi bi-chat-left-text me-1"></i>
+
+                    Indicaciones del pedido
+
+                </label>
+
+
+                <textarea
+                    id="orderNotes"
+                    placeholder="Ejemplo: sin cebolla, indicaciones especiales..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- RESUMEN -->
+
+            <div class="cart-summary">
+
+                <div class="summary-row">
+
+                    <span>Subtotal</span>
+
+                    <strong id="cartSubtotal">
+                        $0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>Delivery</span>
+
+                    <strong id="deliveryFee">
+                        $0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row summary-total">
+
+                    <span>Total</span>
+
+                    <strong id="cartTotal">
+                        $0
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-checkout"
+                    id="btnGoCheckout"
+                >
+
+                    Continuar pedido
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+
+                <small class="cart-disclaimer">
+
+                    El pedido será enviado por WhatsApp
+                    para su confirmación.
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         12. CHECKOUT
+    ====================================================== -->
+
+    <div
+        class="offcanvas offcanvas-end checkout-offcanvas"
+        tabindex="-1"
+        id="checkoutOffcanvas"
+        aria-labelledby="checkoutOffcanvasTitle"
+    >
+
+        <div class="offcanvas-header">
+
+            <h5
+                class="offcanvas-title"
+                id="checkoutOffcanvasTitle"
+            >
+                Finalizar pedido
+            </h5>
+
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Cerrar"
+            ></button>
+
+        </div>
+
+
+        <div class="offcanvas-body">
+
+            <form id="checkoutForm">
+
+                <!-- DATOS PERSONALES -->
+
+                <div class="checkout-section">
+
+                    <h3>
+                        Tus datos
+                    </h3>
+
+
+                    <div class="form-group">
+
+                        <label for="customerName">
+                            Nombre
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customerName"
+                            placeholder="Tu nombre"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customerPhone">
+                            Teléfono
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="customerPhone"
+                            placeholder="+56 9 1234 5678"
+                            autocomplete="tel"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- TIPO DE ENTREGA -->
+
+                <div class="checkout-section">
+
+                    <h3>
+                        ¿Cómo deseas recibir tu pedido?
+                    </h3>
+
+
+                    <div class="delivery-options">
+
+                        <!-- RETIRO -->
+
+                        <label class="delivery-option">
+
+                            <input
+                                type="radio"
+                                name="deliveryType"
+                                value="retiro"
+                                checked
+                            >
+
+                            <span class="delivery-option-content">
+
+                                <i class="bi bi-shop"></i>
+
+                                <strong>
+                                    Retiro en local
+                                </strong>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- DELIVERY -->
+
+                        <label class="delivery-option">
+
+                            <input
+                                type="radio"
+                                name="deliveryType"
+                                value="delivery"
+                            >
+
+                            <span class="delivery-option-content">
+
+                                <i class="bi bi-truck"></i>
+
+                                <strong>
+                                    Delivery
+                                </strong>
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DIRECCIÓN DELIVERY -->
+
+                <div
+                    class="checkout-section"
+                    id="deliveryAddressContainer"
+                    hidden
+                >
+
+                    <div class="form-group">
+
+                        <label for="deliveryAddress">
+                            Dirección de entrega
+                        </label>
+
+                        <input
+                            type="text"
+                            id="deliveryAddress"
+                            placeholder="Calle, número, departamento..."
+                            autocomplete="street-address"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- DIRECCIÓN LOCAL -->
+
+                <div class="store-location">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                    <div>
+
+                        <strong>
+                            Fábrica de Empanadas La Perla
+                        </strong>
+
+                        <span>
+                            14 de Febrero 2532
+                        </span>
+
+                        <small>
+                            Antofagasta, Chile
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="checkout-total">
+
+                    <span>
+                        Total estimado
+                    </span>
+
+                    <strong id="checkoutTotal">
+                        $0
+                    </strong>
+
+                </div>
+
+
+                <!-- ENVIAR -->
+
+                <button
+                    type="submit"
+                    class="btn-whatsapp-checkout"
+                    id="btnSendOrder"
+                >
+
+                    <i class="bi bi-whatsapp"></i>
+
+                    Enviar pedido por WhatsApp
+
+                </button>
+
+
+                <p class="checkout-disclaimer">
+
+                    El pedido queda sujeto a confirmación
+                    de disponibilidad, entrega y valor final.
+
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         13. MODAL DE PEDIDO
+    ====================================================== -->
+
+    <div
+        class="modal fade order-success-modal"
+        id="orderSuccessModal"
+        tabindex="-1"
+        aria-hidden="true"
+    >
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="order-success-content">
+
+                    <div class="success-icon">
+
+                        <i class="bi bi-check-lg"></i>
+
+                    </div>
+
+
+                    <h2>
+                        ¡Pedido preparado!
+                    </h2>
+
+
+                    <p>
+                        Revisa el resumen y continúa
+                        por WhatsApp.
+                    </p>
+
+
+                    <div
+                        class="order-success-summary"
+                        id="orderSuccessSummary"
+                    ></div>
+
+
+                    <a
+                        href="#"
+                        class="btn-success-whatsapp"
+                        id="btnOpenWhatsApp"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+
+                        <i class="bi bi-whatsapp"></i>
+
+                        Abrir WhatsApp
+
+                    </a>
+
+
+                    <button
+                        type="button"
+                        class="btn-back-catalog"
+                        data-bs-dismiss="modal"
+                    >
+
+                        Volver al catálogo
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         14. MODAL DE IMÁGENES
+    ====================================================== -->
+
+    <div
+        class="modal fade"
+        id="imageModal"
+        tabindex="-1"
+        aria-labelledby="imageModalTitle"
+        aria-hidden="true"
+    >
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5
+                        class="modal-title"
+                        id="imageModalTitle"
+                    >
+                        Imagen
+                    </h5>
+
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"
+                    ></button>
+
+                </div>
+
+
+                <div class="modal-body p-0">
+
+                    <img
+                        id="imageModalImg"
+                        src=""
+                        alt="Imagen ampliada"
+                        class="img-fluid w-100"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         15. WHATSAPP FLOTANTE
+    ====================================================== -->
+
+ 
+
+
+    <!-- =====================================================
+         16. SCRIPTS
+    ====================================================== -->
+
+    <!-- BOOTSTRAP -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    <!-- SWEETALERT2 -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/sweetalert2@11"
+    ></script>
+
+
+    <!-- APP -->
 
     <script src="js/app.js"></script>
+
+
+    <!-- CARRITO -->
+
     <script src="js/cart.js"></script>
+
+
+    <!-- CATÁLOGO -->
+
     <script src="js/menu.js"></script>
+
+
+    <!-- ANIMACIONES -->
+
+    <script src="js/animations.js"></script>
+
 </body>
+
 </html>
